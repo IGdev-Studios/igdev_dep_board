@@ -1,0 +1,38 @@
+/* CSS for html file */
+body {
+	background-color: #DDDDDD;
+	margin: 0;
+}
+div:first-child {
+	float: right;
+}
+h1, .txtw{
+	font-family: 'Myriad Pro';
+	color: white;	
+}
+h1 {
+	font-size: 70px;
+}
+.txtw{
+	font-size: 40px;
+}
+#cadre {
+	height: 870px;
+	width: 90%;
+	border-radius: 70px;
+	background-color: #333333 ;
+	margin: 1% 5%;
+	padding: 1% 2% 0% 2%;
+}
+.ligneblanche {
+	height: 10px;
+	background-color: white; 
+}
+#surcadre {
+	height: 650px;
+	border-radius: 30px;
+	background-color: white ;
+}
+.dest-ligne{
+	height: 20px;
+}

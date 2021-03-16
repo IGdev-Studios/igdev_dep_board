@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="./bootstrap-5.0.0/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<script src="js/script.js"></script>
+	<script>
+		async function refresh(){
+			let finalSchedules = await getSchedules();
+			if(finalSchedules == "Aucun passage de prévu"){
+				document.getElementById('passages').innerHTML = finalSchedules;
+			}else{
+				HTMLContent = "<table border=1>";
+				finalSchedules.forEach(element => {
+					HTMLContent += "<tr>";
+					HTMLContent += "<td>" + element.lastStop + "</td>";
+					element.times.forEach(time => {
+						HTMLContent += "<td>" + time.arrival;
+						if(time.realtime == true){
+							HTMLContent+= "R";
+						}
+						HTMLContent += "</td>";
+					});
+					HTMLContent += "</tr>";
+				});
+				HTMLContent += "</table>";
+				document.getElementById('passages').innerHTML = HTMLContent
+
+
+			}
+		};
+		setInterval(function(){ 
+			refresh();   
+		}, 5000);
+	</script>
+	<title>Corenc - Montfleury</title>
+</head>
+<body onload="refresh()">
+	<div id="passages">Chargement...</div>
+	<div id="cadre"><!-- Cadre Noir-->
+		<h1 class="">Prochains départs Monfleury <img src="img/Cita_60px.png" alt="Citadis" /></h1>
+		<div class="ligneblanche"></div>
+		<div class="row txtw"><!-- Ligne texte-->
+			<div class="col-1">Ligne</div>
+			<div class="col-1"></div>
+			<div class="col-8">Destination</div>
+			<div class="col-2">Temps d'attente</div>
+		</div>
+		<div id="surcadre"> <!--Cadre blanc -->
+			<div class="dest-ligne row">
+				<div class="col-2">
+					<img src="img/16_600px.png" alt="16"/>
+				</div>
+				<div class="col-8">
+					Gendarmerie
+				</div>
+				<div class="col-2">
+					2min
+				</div>
+			</div>
+			<div class="dest-ligne row">
+				<div class="col-2">
+					<img src="img/16_600px.png" alt="16"/>
+				</div>
+				<div class="col-8">
+					Gendarmerie
+				</div>
+				<div class="col-2">
+					2min
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

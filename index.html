@@ -10,32 +10,74 @@
 	<script src="js/script.js"></script>
 	<script>
 		async function refresh(){
-			let finalSchedules = await getSchedules();
-			if(finalSchedules == "Aucun passage de prévu"){
-				document.getElementById('passages').innerHTML = finalSchedules;
+			let schedules = await getSchedules();
+			if(schedules == "Aucun passage de prévu"){
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div>';
+				document.getElementById('passages').innerHTML = HTMLContent;
 			}else{
-				HTMLContent = "<table border=1>";
-				finalSchedules.forEach(element => {
-					HTMLContent += "<tr>";
-					HTMLContent += "<td>" + element.lastStop + "</td>";
-					element.times.forEach(time => {
-						HTMLContent += "<td>" + time.arrival;
-						if(time.realtime == true){
-							HTMLContent+= "R";
-						}
-						HTMLContent += "</td>";
-					});
-					HTMLContent += "</tr>";
-				});
-				HTMLContent += "</table>";
-				document.getElementById('passages').innerHTML = HTMLContent
+				let finalSchedules = sort(schedules);
+			
+				HTMLContent = "";
+				
+				if(finalSchedules.length >= 4){
+					for (let i = 0; i <= 3; i++) {
+						if(finalSchedules[i].time >= 0){
+					HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
+					HTMLContent += finalSchedules[i].line;
+					HTMLContent += '_600px.png" alt="16"/></div><div class="dest-txt">';
+					HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
+					if(finalSchedules[i].time == 0){
+						HTMLContent += "<1";
+					}else{
+						HTMLContent += finalSchedules[i].time;
+					}
+					HTMLContent += "min";
+					if(finalSchedules[i].realtime != true){
+						HTMLContent += "*";
+					}
+					HTMLContent += "</div>";
+					HTMLContent += "</div>";
+					HTMLContent += '<div class="lignegrise"></div>';
+				}
+					}
+				}else{
+					finalSchedules.forEach(element => {
+					if(element.time >= 0){
+					HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
+					HTMLContent += element.line;
+					HTMLContent += '_600px.png" alt="16"/></div><div class="dest-txt">';
+					HTMLContent += element.lastStop + '</div><div class="time-txt">';
+					if(element.time == 0){
+						HTMLContent += "<1";
+					}else{
+						HTMLContent += element.time;
+					}
+					HTMLContent += "min";
+					if(element.realtime != true){
+						HTMLContent += "*";
+					}
+					HTMLContent += "</div>";
+					HTMLContent += "</div>";
+					HTMLContent += '<div class="lignegrise"></div>';
+				}
 
+				});
+				}
+
+				
+
+				document.getElementById('passages').innerHTML = HTMLContent;
 
 			}
 		};
 		setInterval(function(){ 
 			refresh();   
 		}, 5000);
+		setInterval(function(){ 
+			let time = getTime();  
+			document.getElementById('time').innerHTML = time;
+			
+		}, 1000);
 	</script>
 	<script>
 		
@@ -47,7 +89,7 @@
 	<div id="cadre"><!-- Cadre Noir-->
 		<div class="main-grid">
 			<div class="main">Prochains départs Monfleury</div>
-			<div class="txth"><span>10:07</span></div>
+			<div class="txth"><span id="time">10:07</span></div>
 		</div>
 		<div class="ligneblanche"></div>
 		<div class="txtfix colfix"><!-- Ligne texte-->
@@ -56,67 +98,9 @@
 			<div class="">Temps d'attente</div>
 		</div>
 		<div id="surcadre"> <!--Cadre blanc -->
-			<div class="colfix dest-ligne">
-				<div class="ligne-img">
-					<img src="img/16_600px.png" alt="16"/>
-				</div>
-				<div class="dest-txt">
-					Gendarmerie
-				</div>
-				<div class="time-txt">
-					2min
-				</div>
+			<div id="passages">
+				Chargement...
 			</div>
-			<div class="lignegrise"></div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img">
-					<img src="img/16_600px.png" alt="16"/>
-				</div>
-				<div class="dest-txt">
-					Lycée du Grésivaudan
-				</div>
-				<div class="time-txt">
-					9min
-				</div>
-			</div>
-			
-			<div class="lignegrise"></div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img">
-					-
-				</div>
-				<div class="dest-txt">
-					Sans Voyageurs
-				</div>
-				<div class="time-txt">
-					-
-				</div>
-			</div>
-			<div class="lignegrise"></div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img">
-					<img src="img/16_600px.png" alt="16"/>
-				</div>
-				<div class="dest-txt">
-					Verdun-Préfecture
-				</div>
-				<div class="time-txt">
-					20min*
-				</div>
-			</div>
-			<div class="lignegrise"></div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img">
-					-
-				</div>
-				<div class="dest-txt">
-					-
-				</div>
-				<div class="time-txt">
-					-
-				</div>
-			</div>
-			<div class="lignegrise"></div>
 			<div class="colfix dest-ligne">
 				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png" alt="TAG"></div>
 				<div class="dest-txt">Je monte, Je valide !</div>
@@ -133,6 +117,5 @@
 			</span></div>
 		</div>
 	</div>
-	<div id="passages">Chargement...</div>
 </body>
 </html>

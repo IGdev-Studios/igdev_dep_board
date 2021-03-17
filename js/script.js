@@ -1,44 +1,18 @@
 async function getSchedules(){
-    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/SEM:GENMONTFLEU/stoptimes");
-    console.log(timesMontfleury);
+    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/SEM:GENPRENOUVE/stoptimes");
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
         var id = element.pattern.id.split(":");
-        if(id[1] == "16"){
-           found = 0;
-           finalSchedules.forEach(finalSchedule => {
-            if(finalSchedule.lastStop == element.pattern.desc){
-                found = 1;
-                return false;
-            } 
-
-    });
-    if(found == 0){
-        finalSchedules.push({
-                    "lastStop":element.pattern.desc,
-                    "times":[]
+        if(id[1] == "21" || id[1] == "19"){
+            element.times.forEach(time => {
+                finalSchedules.push({
+                    "lastStop":element.pattern.lastStopName,
+                    "time":time.realtimeArrival,
+                    "realtime":time.realtime,
+                    "line":id[1]
                 });
-        element.times.forEach(time => {
-            let index = finalSchedules.map((o) => o.lastStop).indexOf(element.pattern.desc);
-            finalSchedules[index].times.push(
-                {"arrival":secToDelay(time.realtimeArrival),
-                "realtime":time.realtime
-                }
-            );
-        });
-    }else{
-        element.times.forEach(time => {
-            let index = finalSchedules.map((o) => o.lastStop).indexOf(element.pattern.desc);
-            
-            finalSchedules[index].times.push(
-                {"arrival":secToDelay(time.realtimeArrival),
-                "realtime":time.realtime
-                }
-            );
-        });
-    }
+            });
         }
-        
     });
     if (finalSchedules == []){
         return "Aucun passage de prévu";
@@ -61,10 +35,45 @@ function secToDelay(time){
     let currentDate = new Date();
     let secondes = ((currentDate.getHours())*3600)+((currentDate.getMinutes())*60)+currentDate.getSeconds();
     let difference = Math.floor((time-secondes)/60);
-    if(difference == 0){
-        return "<1";
-    }else{
         return difference;
-    }
     
+}
+
+function sort(tab){
+    var values = []
+    for (var key in tab){
+        values.push([key, tab[key].time, tab[key].lastStop, tab[key].realtime, tab[key].line])
+    }
+
+    values.sort(function compare(i,j){
+        return i[1]-j[1];
+    });
+    var finalSchedules = []
+    values.forEach(element => {
+        finalSchedules.push(
+            {
+                "lastStop":element[2],
+                "time":secToDelay(element[1]),
+                "realtime":element[3],
+                "line":element[4]
+            }
+        );
+    });
+    return finalSchedules;
+}
+
+function checkTime(i){
+    if (i<10){
+        i = "0"+i;
+    }
+    return i;
+}
+
+function getTime(){
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    h = checkTime(h);
+    m = checkTime(m);
+    return h+":"+m;
 }

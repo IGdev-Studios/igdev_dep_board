@@ -10,46 +10,79 @@ body {
 img {
 	height: 100px;
 }
-h1, .txtw{
-	font-family: 'Myriad Pro';
+.main-grid {
+	display: grid;
+	grid-template-columns: 5fr 1fr;
+}
+.main, .txtfix, .txth{
+	font-family: "Oxygen";
 	color: white;	
 }
-h1 {
+.main {
+	font-size: 70px;
+	margin-bottom: 5px;
+}
+.txth{
+	width: 65%;
+	border-radius: 40px;
+	background-color: white;
+	color: #333333;
+	justify-self: center;
+	align-self: center;
 	font-size: 70px;
 }
-.txtw{
+div.main>span {
+	font-size: 20px;
+}
+.txtfix{
 	font-size: 40px;
+	padding-bottom: 4px;
 }
 #cadre {
-	height: 870px;
+	height: 110% ;
 	width: 90%;
 	border-radius: 70px;
 	background-color: #333333 ;
-	margin: 1% 5%;
-	padding: 1% 2% 0% 2%;
+	margin: 1% 3% 1% ;
+	padding: 1% 2% 1% 2%;
+}
+.colfix {
+	display: grid;
+	grid-template-columns: 2fr 8fr 2fr ;
+	gap: 20px;
 }
 .ligneblanche {
 	height: 10px;
 	background-color: white; 
 }
+.lignegrise {
+	height: 4px;
+	background-color: lightgray; 
+}
 #surcadre {
-	height: 650px;
+	height: 700px;
 	border-radius: 30px;
 	background-color: white ;
 }
-/*.img-ligne{
+.img-ligne{
+	display: flex;
+	justify-self: center;
+	align-self: center;
+	font-size: 70px;
+}
+.dest-ligne{
 	display: grid;
 	align-items: center;
-}*/
-.dest-ligne{
-	/*padding: 20px 10%;*/
-	display: grid;
-	grid-template-columns: 2fr 8fr 2fr ;
-	gap: 5px;
+	padding: 10px 0;
+	/*row-gap: 10px;*/
 }
 .dest-txt{
-	font-size: 50px;
+	font-size: 70px;
 }
 .time-txt{
-	font-size: 50px;
+	font-size: 70px;
+}
+.infoth {
+	display: flex;
+	justify-content: flex-end;
 }

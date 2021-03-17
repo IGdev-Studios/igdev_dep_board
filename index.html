@@ -39,18 +39,20 @@
 	<title>Corenc - Montfleury</title>
 </head>
 <body onload="refresh()">
-	<div id="passages">Chargement...</div>
+	
 	<div id="cadre"><!-- Cadre Noir-->
-		<h1 class="">Prochains départs Monfleury <img src="img/Cita_60px.png" alt="Citadis" /></h1>
+		<div class="main-grid">
+			<div class="main">Prochains départs Monfleury <span>by</span> <img src="img/Cita_60px.png" alt="Citadis" /></div>
+			<div class="txth"><span>10:07</span></div>
+		</div>
 		<div class="ligneblanche"></div>
-		<div class="row txtw"><!-- Ligne texte-->
-			<div class="col-1">Ligne</div>
-			<div class="col-1"></div>
-			<div class="col-8">Destination</div>
-			<div class="col-2">Temps d'attente</div>
+		<div class="txtfix colfix"><!-- Ligne texte-->
+			<div class="">Ligne</div>
+			<div class="">Destination</div>
+			<div class="">Temps d'attente</div>
 		</div>
 		<div id="surcadre"> <!--Cadre blanc -->
-			<div class="dest-ligne">
+			<div class="colfix dest-ligne">
 				<div class="img-ligne">
 					<img src="img/16_600px.png" alt="16"/>
 				</div>
@@ -61,7 +63,8 @@
 					2min
 				</div>
 			</div>
-			<div class="dest-ligne">
+			<div class="lignegrise"></div>
+			<div class="colfix dest-ligne">
 				<div class="img-ligne">
 					<img src="img/16_600px.png" alt="16"/>
 				</div>
@@ -69,10 +72,24 @@
 					Lycée du Grésivaudan
 				</div>
 				<div class="time-txt">
-					2min
+					9min
+				</div>
+			</div>
+			<div class="lignegrise"></div>
+			<div class="colfix dest-ligne">
+				<div class="img-ligne">
+					-
+				</div>
+				<div class="dest-txt">
+					Sans Voyageurs
+				</div>
+				<div class="time-txt">
+					-
 				</div>
 			</div>
 		</div>
+		<div class="infoth txtfix">* : information théorique</div>
 	</div>
+	<div id="passages">Chargement...</div>
 </body>
 </html>

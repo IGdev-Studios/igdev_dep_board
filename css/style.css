@@ -3,8 +3,12 @@ body {
 	background-color: #DDDDDD;
 	margin: 0;
 }
-div:first-child {
+#passages{
+	color: red;
 	float: right;
+}
+img {
+	height: 100px;
 }
 h1, .txtw{
 	font-family: 'Myriad Pro';
@@ -33,6 +37,19 @@ h1 {
 	border-radius: 30px;
 	background-color: white ;
 }
+/*.img-ligne{
+	display: grid;
+	align-items: center;
+}*/
 .dest-ligne{
-	height: 20px;
+	/*padding: 20px 10%;*/
+	display: grid;
+	grid-template-columns: 2fr 8fr 2fr ;
+	gap: 5px;
+}
+.dest-txt{
+	font-size: 50px;
+}
+.time-txt{
+	font-size: 50px;
 }

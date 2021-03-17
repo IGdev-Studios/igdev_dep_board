@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+	<!-- Version 0.4-->
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,13 +37,16 @@
 			refresh();   
 		}, 5000);
 	</script>
+	<script>
+		
+	</script>
 	<title>Corenc - Montfleury</title>
 </head>
 <body onload="refresh()">
 	
 	<div id="cadre"><!-- Cadre Noir-->
 		<div class="main-grid">
-			<div class="main">Prochains départs Monfleury <span>by</span> <img src="img/Cita_60px.png" alt="Citadis" /></div>
+			<div class="main">Prochains départs Monfleury</div>
 			<div class="txth"><span>10:07</span></div>
 		</div>
 		<div class="ligneblanche"></div>
@@ -53,7 +57,7 @@
 		</div>
 		<div id="surcadre"> <!--Cadre blanc -->
 			<div class="colfix dest-ligne">
-				<div class="img-ligne">
+				<div class="ligne-img">
 					<img src="img/16_600px.png" alt="16"/>
 				</div>
 				<div class="dest-txt">
@@ -65,7 +69,7 @@
 			</div>
 			<div class="lignegrise"></div>
 			<div class="colfix dest-ligne">
-				<div class="img-ligne">
+				<div class="ligne-img">
 					<img src="img/16_600px.png" alt="16"/>
 				</div>
 				<div class="dest-txt">
@@ -75,9 +79,10 @@
 					9min
 				</div>
 			</div>
+			
 			<div class="lignegrise"></div>
 			<div class="colfix dest-ligne">
-				<div class="img-ligne">
+				<div class="ligne-img">
 					-
 				</div>
 				<div class="dest-txt">
@@ -87,8 +92,46 @@
 					-
 				</div>
 			</div>
+			<div class="lignegrise"></div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img">
+					<img src="img/16_600px.png" alt="16"/>
+				</div>
+				<div class="dest-txt">
+					Verdun-Préfecture
+				</div>
+				<div class="time-txt">
+					20min*
+				</div>
+			</div>
+			<div class="lignegrise"></div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img">
+					-
+				</div>
+				<div class="dest-txt">
+					-
+				</div>
+				<div class="time-txt">
+					-
+				</div>
+			</div>
+			<div class="lignegrise"></div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png" alt="TAG"></div>
+				<div class="dest-txt">Je monte, Je valide !</div>
+				<div class="time-txt"><img src="img/Cita_60px.png" alt="Citadis" /><span>
+					V0.4					
+				</span></div>
+			</div>
 		</div>
-		<div class="infoth txtfix">* : information théorique</div>
+		<div class="colfix">
+			<div></div>
+			<div class="infoth txtfix">* : information théorique</div>
+			<div class="txtfix "><span>
+				
+			</span></div>
+		</div>
 	</div>
 	<div id="passages">Chargement...</div>
 </body>

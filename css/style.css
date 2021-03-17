@@ -13,14 +13,14 @@ img {
 .main-grid {
 	display: grid;
 	grid-template-columns: 5fr 1fr;
+	margin-bottom: 10px;
 }
 .main, .txtfix, .txth{
 	font-family: "Oxygen";
 	color: white;	
 }
-.main {
+.main, .dest-txt, .time-txt{
 	font-size: 70px;
-	margin-bottom: 5px;
 }
 .txth{
 	width: 65%;
@@ -30,9 +30,6 @@ img {
 	justify-self: center;
 	align-self: center;
 	font-size: 70px;
-}
-div.main>span {
-	font-size: 20px;
 }
 .txtfix{
 	font-size: 40px;
@@ -64,7 +61,7 @@ div.main>span {
 	border-radius: 30px;
 	background-color: white ;
 }
-.img-ligne{
+.ligne-img{
 	display: flex;
 	justify-self: center;
 	align-self: center;
@@ -76,13 +73,10 @@ div.main>span {
 	padding: 10px 0;
 	/*row-gap: 10px;*/
 }
-.dest-txt{
-	font-size: 70px;
-}
-.time-txt{
-	font-size: 70px;
-}
 .infoth {
 	display: flex;
 	justify-content: flex-end;
+}
+div.time-txt>span, div.version>span {
+	font-size: 40px;
 }

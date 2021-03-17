@@ -1,9 +1,9 @@
 async function getSchedules(){
-    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/SEM:GENPRENOUVE/stoptimes");
+    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/SEM:GENMONTFLEU/stoptimes");
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
         var id = element.pattern.id.split(":");
-        if(id[1] == "21" || id[1] == "19"){
+        if(id[1] == "16"){
             element.times.forEach(time => {
                 finalSchedules.push({
                     "lastStop":element.pattern.lastStopName,

@@ -11,7 +11,7 @@
 		async function refresh(){
 			let schedules = await getSchedules();
 			if(schedules == "Aucun passage de prévu"){
-				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div>';
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
 				document.getElementById('passages').innerHTML = HTMLContent;
 			}else{
 				let finalSchedules = sort(schedules);
@@ -100,13 +100,13 @@
 			<div id="passages">
 				<div class="colfix dest-ligne">
 					<div class="ligne-img">
-						
+						-
 					</div>
 					<div class="dest-txt">
 						Chargement
 					</div>
 					<div class="time-txt">
-						
+						-
 					</div>
 				</div>
 				<div class="lignegrise"></div>

@@ -14,7 +14,7 @@ async function getSchedules(){
             });
         }
     });
-    if (finalSchedules == []){
+    if (!finalSchedules.length){
         return "Aucun passage de prévu";
     }else{
         return finalSchedules;

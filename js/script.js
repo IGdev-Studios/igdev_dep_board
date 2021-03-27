@@ -122,8 +122,11 @@ function editLinesAndStop(stop,lines){
         localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
         loading();
         refresh();
-        
+    
+}
 
-
-
+function minutesToHours(minutes){
+    var currentDate = new Date();
+    var newDate = new Date(currentDate.getTime() + minutes*60000 +60000);
+    return newDate.getHours() + ":" + newDate.getMinutes()
 }

@@ -36,10 +36,14 @@
 					HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
 					if(finalSchedules[i].time == 0){
 						HTMLContent += "<1";
+						HTMLContent += "min";
+					}else if(finalSchedules[i].time >= 60){
+						HTMLContent += minutesToHours(finalSchedules[i].time);
+						
 					}else{
 						HTMLContent += finalSchedules[i].time;
+						HTMLContent += "min";
 					}
-					HTMLContent += "min";
 					if(finalSchedules[i].realtime != true){
 						HTMLContent += "*";
 					}
@@ -57,10 +61,14 @@
 					HTMLContent += element.lastStop + '</div><div class="time-txt">';
 					if(element.time == 0){
 						HTMLContent += "<1";
+						HTMLContent += "min";
+					}else if(element.time >= 60){
+						HTMLContent += minutesToHours(element.time);
+						
 					}else{
 						HTMLContent += element.time;
+						HTMLContent += "min";
 					}
-					HTMLContent += "min";
 					if(element.realtime != true){
 						HTMLContent += "*";
 					}

@@ -107,8 +107,9 @@ function editLinesAndStop(stop,lines){
             "line":lines
         }
         localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
-        console.log()
+        loading();
         refresh();
+        
     }else{
         window.alert("Erreur !  Merci d'entrer un arrêt et un numéro de ligne valide")
     }

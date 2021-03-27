@@ -15,7 +15,7 @@
 			document.title = LinesAndStop.arret;
 			document.getElementById('main').innerHTML = HTMLContent;
 			document.getElementById('arretForm').value = LinesAndStop.arret;
-			document.getElementById('lignesForm').value = LinesAndStop.lines;
+			document.getElementById('lignesForm').value = LinesAndStop.line;
 		}
 		async function refresh(){
 			let schedules = await getSchedules();

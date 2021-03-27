@@ -2,6 +2,9 @@
 Mini and simple website created to display next bus arrival on a (web) departure board.
 Currently, station planned is Montfleury in Grenoble (FR)
 
+V0.6
+  Ability to select stop
+
 V0.5
   Departure board works now fine with real-time data
   Clock works now too

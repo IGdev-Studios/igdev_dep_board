@@ -4,6 +4,7 @@ Currently, station planned is Montfleury in Grenoble (FR)
 
 V0.7
   Ability to select mutiple lines
+  
 V0.6
   Ability to select stop
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<!-- Version 0.6-->
+	<!-- Version 0.7-->
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +15,7 @@
 			document.title = LinesAndStop.arret;
 			document.getElementById('main').innerHTML = HTMLContent;
 			document.getElementById('arretForm').value = LinesAndStop.arret;
-			document.getElementById('lignesForm').value = LinesAndStop.line;
+			document.getElementById('lignesForm').value = LinesAndStop.lines;
 		}
 		async function refresh(){
 			let schedules = await getSchedules();
@@ -124,7 +124,7 @@
 				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png" alt="TAG"></div>
 				<div class="dest-txt">Je monte, Je valide !</div>
 				<div class="time-txt"><img src="img/Cita_60px.png" alt="Citadis" /><span>
-					V0.6				
+					V0.7				
 				</span></div>
 			</div>
 		</div>
@@ -137,8 +137,10 @@
 		</div>
 	</div>
 	<form>
-		<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;">
-		<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;">
+		<label for="arretForm"> Arrêt : (utilisez l'autocomplétion) </label>
+		<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;"><br>
+		<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparlez les par une virgule. Ex: "19,21") </label>
+		<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;"><br>
 <datalist id="lignesForm-list">
 	<option>A</option>
 	<option>B</option>
@@ -925,5 +927,7 @@
 		<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value);">Valider</button>
 
 	</form>
+	<br>
+	<br>
 </body>
 </html>

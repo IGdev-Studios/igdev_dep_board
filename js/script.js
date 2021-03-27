@@ -4,7 +4,17 @@ async function getSchedules(){
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
         var id = element.pattern.id.split(":");
-        if(id[1] == String(LinesAndStop.line)){
+        if(!LinesAndStop.lines){
+            element.times.forEach(time => {
+                finalSchedules.push({
+                    "lastStop":element.pattern.lastStopName,
+                    "time":time.realtimeArrival,
+                    "realtime":time.realtime,
+                    "line":id[1]
+                });
+            });
+        }else{
+        if(LinesAndStop.lines.includes(id[1])){
             element.times.forEach(time => {
                 finalSchedules.push({
                     "lastStop":element.pattern.lastStopName,
@@ -14,6 +24,7 @@ async function getSchedules(){
                 });
             });
         }
+    }
     });
     if (!finalSchedules.length){
         return "Aucun passage de prévu";
@@ -84,7 +95,7 @@ function checkSaved(){
     let LinesAndStop = {
         "arret":"Montfleury",
         "zone":"SEM:GENMONTFLEU",
-        "line":16
+        "lines":[16]
     }
     localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
    }
@@ -92,7 +103,7 @@ function checkSaved(){
 
 function editLinesAndStop(stop,lines){
     
-    if(linesAvailable.includes(lines) && stopsAvailable.includes(stop)){
+ 
         var i = 0;
         var found = 0;
         for (key in dictStops){
@@ -101,18 +112,18 @@ function editLinesAndStop(stop,lines){
             }
             i++;
         }
+        var linesSplit = lines.split(",");
+        console.log(linesSplit);
         let LinesAndStop = {
             "arret":stop,
             "zone":"SEM:"+dictStops[found][0],
-            "line":lines
+            "lines":lines
         }
         localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
         loading();
         refresh();
         
-    }else{
-        window.alert("Erreur !  Merci d'entrer un arrêt et un numéro de ligne valide")
-    }
+
 
 
 }

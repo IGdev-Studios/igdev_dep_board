@@ -1,9 +1,10 @@
 async function getSchedules(){
-    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/SEM:GENMONTFLEU/stoptimes");
+    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStop'));
+    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/"+ LinesAndStop.zone +"/stoptimes");
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
         var id = element.pattern.id.split(":");
-        if(id[1] == "16"){
+        if(id[1] == String(LinesAndStop.line)){
             element.times.forEach(time => {
                 finalSchedules.push({
                     "lastStop":element.pattern.lastStopName,
@@ -76,4 +77,41 @@ function getTime(){
     h = checkTime(h);
     m = checkTime(m);
     return h+":"+m;
+}
+
+function checkSaved(){
+   if(localStorage.getItem('LinesAndStop') == null){
+    let LinesAndStop = {
+        "arret":"Montfleury",
+        "zone":"SEM:GENMONTFLEU",
+        "line":16
+    }
+    localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
+   }
+}
+
+function editLinesAndStop(stop,lines){
+    
+    if(linesAvailable.includes(lines) && stopsAvailable.includes(stop)){
+        var i = 0;
+        var found = 0;
+        for (key in dictStops){
+            if(dictStops[key][1] == stop){
+                found = i;
+            }
+            i++;
+        }
+        let LinesAndStop = {
+            "arret":stop,
+            "zone":"SEM:"+dictStops[found][0],
+            "line":lines
+        }
+        localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
+        console.log()
+        refresh();
+    }else{
+        window.alert("Erreur !  Merci d'entrer un arrêt et un numéro de ligne valide")
+    }
+
+
 }

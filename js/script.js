@@ -54,7 +54,9 @@ function secToDelay(time){
 function sort(tab){
     var values = []
     for (var key in tab){
-        values.push([key, tab[key].time, tab[key].lastStop, tab[key].realtime, tab[key].line])
+        if(tab[key].time >= 0){
+            values.push([key, tab[key].time, tab[key].lastStop, tab[key].realtime, tab[key].line])
+        }
     }
 
     values.sort(function compare(i,j){

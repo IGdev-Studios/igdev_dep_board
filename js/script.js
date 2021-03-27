@@ -128,5 +128,5 @@ function editLinesAndStop(stop,lines){
 function minutesToHours(minutes){
     var currentDate = new Date();
     var newDate = new Date(currentDate.getTime() + minutes*60000 +60000);
-    return newDate.getHours() + ":" + newDate.getMinutes()
+    return checkTime(newDate.getHours()) + ":" + checkTime(newDate.getMinutes())
 }

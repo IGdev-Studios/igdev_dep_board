@@ -64,6 +64,7 @@ function sort(tab){
     });
     var finalSchedules = []
     values.forEach(element => {
+        if(secToDelay(element[1]) >= 0){
         finalSchedules.push(
             {
                 "lastStop":element[2],
@@ -72,6 +73,7 @@ function sort(tab){
                 "line":element[4]
             }
         );
+        }
     });
     return finalSchedules;
 }

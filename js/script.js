@@ -99,7 +99,7 @@ function checkSaved(){
     let LinesAndStop = {
         "arret":"Montfleury",
         "zone":"SEM:GENMONTFLEU",
-        "lines":[16]
+        "lines":["16"]
     }
     localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
    }

@@ -20,7 +20,7 @@ img {
 	font-size: 70px;
 }
 .txth{
-	width: 65%;
+	padding: 0 5px ;
 	border-radius: 40px;
 	background-color: white;
 	color: #333333;
@@ -54,7 +54,7 @@ img {
 	background-color: lightgray; 
 }
 #surcadre {
-	height: 700px;
+	min-height: 700px;
 	border-radius: 30px;
 	background-color: white ;
 }

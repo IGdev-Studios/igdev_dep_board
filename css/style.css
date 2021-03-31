@@ -1,9 +1,9 @@
 /* CSS for html file */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Oxanium&family=Oxygen&display=swap');
 body {
 	background-color: #DDDDDD;
 	margin: 0;
 }
-
 img {
 	height: 100px;
 }
@@ -12,21 +12,23 @@ img {
 	grid-template-columns: 5fr 1fr;
 	margin-bottom: 10px;
 }
-.main, .txtfix, .txth{
-	font-family: "Oxygen";
+.main, .txtfix{
+	font-family: "Fira Sans", sans-serif;
 	color: white;	
 }
 .main, .dest-txt, .time-txt{
+	font-family: "Fira Sans", sans-serif;
 	font-size: 70px;
 }
-.txth{
-	padding: 0 5px ;
+.heure{
+	padding: 0 10px ;
 	border-radius: 40px;
 	background-color: white;
 	color: #333333;
 	justify-self: center;
 	align-self: center;
 	font-size: 70px;
+	font-family: "Oxanium", cursive;
 }
 .txtfix{
 	font-size: 40px;

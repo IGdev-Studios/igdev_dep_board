@@ -33,7 +33,7 @@
 						if(finalSchedules[i].time >= 0){
 					HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
 					HTMLContent += finalSchedules[i].line;
-					HTMLContent += '_600px.png" alt="16"/></div><div class="dest-txt">';
+					HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/></div><div class="dest-txt">';
 					HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
 					if(finalSchedules[i].time == 0){
 						HTMLContent += "<1";
@@ -58,7 +58,7 @@
 					if(element.time >= 0){
 					HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
 					HTMLContent += element.line;
-					HTMLContent += '_600px.png" alt="16"/></div><div class="dest-txt">';
+					HTMLContent += '_600px.png" alt="'+ element.line + '"/></div><div class="dest-txt">';
 					HTMLContent += element.lastStop + '</div><div class="time-txt">';
 					if(element.time == 0){
 						HTMLContent += "<1";

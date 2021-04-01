@@ -79,3 +79,12 @@ img {
 div.time-txt>span, div.version>span {
 	font-size: 40px;
 }
+a.tag, a.tag:visited	 {
+	color: #358fdc
+}
+h2 {
+	text-decoration: underline;
+}
+details {
+	margin: 20px
+}

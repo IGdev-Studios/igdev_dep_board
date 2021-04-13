@@ -1,9 +1,8 @@
-# FR.
-# Tableau des prochains départ
+# FR. Tableau des prochains départ
 Mini-site simple créé pour afficher l'arrivée du prochain bus sur un tableau de départ (web).
 Actuellement, tous les arrêts TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) et TouGo (Grésivaudan) sont disponibles et fonctionnels.
 
-# PATCH NOTES :
+# FR. PATCH NOTES :
 
 V0.9
   - Ajout des tableaux d'arrivée des réseaux de bus "pays voironnais mobilité" et "tougo".
@@ -39,12 +38,11 @@ V0.1
   - Concept de base créé à partir de rien (et de paint.net)
   - 
 
-# EN.
-# Next departures board
+# EN. Next departures board
 Mini and simple website created to display next bus arrival on a (web) departure board.
 Currently, all TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) and TouGo (Grésivaudan) stops are available and functional.
 
-PATCH NOTES :
+# EN. PATCH NOTES :
 
 V0.9
   - Adding the arrival board of the "pays voironnais mobilité" and "tougo" bus networks
@@ -52,29 +50,29 @@ V0.9
   - Adding a French traduction for the Read-me an the Patch Notes
 
 V0.8
-  Now able again to have a clean board
+  - Now able again to have a clean board
   
 V0.7
-  Ability to select mutiple lines
+  - Ability to select mutiple lines
   
 V0.6
-  Ability to select stop
+  - Ability to select stop
 
 V0.5
-  Departure board works now fine with real-time data
-  Clock works now too
+  - Departure board works now fine with real-time data
+  - Clock works now too
 
 V0.4 
-  Final version without functional departure.
-  Added a no-functional clock
-  Added version of diplay, on display
+  - Final version without functional departure.
+  - Added a no-functional clock
+  - Added version of diplay, on display
 
 V0.3
-  Removed Bootstrap, replaced by native grid from css (works better ^^)
-  Final object placement, with adaptive board
+  - Removed Bootstrap, replaced by native grid from css (works better ^^)
+  - Final object placement, with adaptive board
 
 V0.2
-  Setup of main lines with bootstrap (grid css)
+  - Setup of main lines with bootstrap (grid css)
 
 V0.1
-  Basic Concept created from scratch (and paint.net)
+  - Basic Concept created from scratch (and paint.net)

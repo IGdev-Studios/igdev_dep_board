@@ -1,5 +1,5 @@
 async function getSchedules(){
-    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStop'));
+    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTPV'));
     let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/"+ LinesAndStop.zone +"/stoptimes");
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
@@ -95,13 +95,13 @@ function getTime(){
 }
 
 function checkSaved(){
-   if(localStorage.getItem('LinesAndStop') == null){
+   if(localStorage.getItem('LinesAndStopTPV') == null){
     let LinesAndStop = {
         "arret":"Voiron, LEPRINCE RINGUET",
         "zone":"ST00408",
         "lines":["1"]
     }
-    localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
+    localStorage.setItem('LinesAndStopTPV',JSON.stringify(LinesAndStop));
    }
 }
 
@@ -123,7 +123,7 @@ function editLinesAndStop(stop,lines){
             "zone":"TPV:"+dictStops[found][0],
             "lines":lines
         }
-        localStorage.setItem('LinesAndStop',JSON.stringify(LinesAndStop));
+        localStorage.setItem('LinesAndStopTPV',JSON.stringify(LinesAndStop));
         loading();
         refresh();
     

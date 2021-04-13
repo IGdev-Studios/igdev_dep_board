@@ -11,7 +11,7 @@
 	<script src="js/stopsAndLines_tpv.js"></script>
 	<script>
 		function loading(){
-			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStop'));
+			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTPV'));
 			HTMLContent = "Prochains départs " + LinesAndStop.arret;
 			document.title = LinesAndStop.arret;
 			document.getElementById('main').innerHTML = HTMLContent;

@@ -1,0 +1,598 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<!-- Version 0.8-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href=favicon.ico> 
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<script src="js/script_tougo.js"></script>
+	<script src="js/stopsAndLines_tougo.js"></script>
+	<script>
+		function loading(){
+			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStop'));
+			HTMLContent = "Prochains départs " + LinesAndStop.arret;
+			document.title = LinesAndStop.arret;
+			document.getElementById('main').innerHTML = HTMLContent;
+			document.getElementById('arretForm').value = LinesAndStop.arret;
+			document.getElementById('lignesForm').value = LinesAndStop.lines;
+		}
+		async function refresh(){
+			let schedules = await getSchedules();
+			if(schedules == "Aucun passage de prévu"){
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				document.getElementById('passages').innerHTML = HTMLContent;
+			}else{
+				let finalSchedules = sort(schedules);
+
+				HTMLContent = "";
+				
+				if(finalSchedules.length >= 4){
+					for (let i = 0; i <= 3; i++) {
+						if(finalSchedules[i].time >= 0){
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
+							HTMLContent += finalSchedules[i].line;
+							HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/></div><div class="dest-txt">';
+							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
+							if(finalSchedules[i].time == 0){
+								HTMLContent += "<1";
+								HTMLContent += "min";
+							}else if(finalSchedules[i].time >= 60){
+								HTMLContent += minutesToHours(finalSchedules[i].time);
+
+							}else{
+								HTMLContent += finalSchedules[i].time;
+								HTMLContent += "min";
+							}
+							if(finalSchedules[i].realtime != true){
+								HTMLContent += "*";
+							}
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+					}
+				}else{
+					finalSchedules.forEach(element => {
+						if(element.time >= 0){
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
+							HTMLContent += element.line;
+							HTMLContent += '_600px.png" alt="'+ element.line + '"/></div><div class="dest-txt">';
+							HTMLContent += element.lastStop + '</div><div class="time-txt">';
+							if(element.time == 0){
+								HTMLContent += "<1";
+								HTMLContent += "min";
+							}else if(element.time >= 60){
+								HTMLContent += minutesToHours(element.time);
+
+							}else{
+								HTMLContent += element.time;
+								HTMLContent += "min";
+							}
+							if(element.realtime != true){
+								HTMLContent += "*";
+							}
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+
+					});
+				}
+
+				
+
+				document.getElementById('passages').innerHTML = HTMLContent;
+
+			}
+		};
+		setInterval(function(){ 
+			refresh();   
+		}, 15000);
+		setInterval(function(){ 
+			let time = getTime();  
+			document.getElementById('time').innerHTML = time;
+			
+		}, 1000);
+	</script>
+	<title>TouGo Departure board</title>
+</head>
+<body onload="document.getElementById('time').innerHTML = getTime(); checkSaved(); loading(); refresh();">
+	
+	<div id="cadre"><!-- Cadre Noir-->
+		<div class="main-grid">
+			<div class="main" id="main">Prochains départs</div>
+			<div class="heure"><span id="time">88:88</span></div>
+		</div>
+		<div class="ligneblanche"></div>
+		<div class="txtfix colfix"><!-- Ligne texte-->
+			<div class="">Ligne</div>
+			<div class="">Destination</div>
+			<div class="">Temps d'attente</div>
+		</div>
+		<div id="surcadre"> <!--Cadre blanc -->
+			<div id="passages">
+				<div class="colfix dest-ligne">
+					<div class="ligne-img">
+						-
+					</div>
+					<div class="dest-txt">
+						Chargement
+					</div>
+					<div class="time-txt">
+						-
+					</div>
+				</div>
+				<div class="lignegrise"></div>
+			</div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/1/19/Logo_R%C3%A9seau_TouGo.jpg" alt="tougo"></div>
+				<div class="dest-txt">Prenez de l'avance</div>
+				<div class="time-txt"><img src="img/Cita_60px.png" alt="Citadis" /><span>
+					V0.8				
+				</span></div>
+			</div>
+		</div>
+		<div class="colfix">
+			<div></div>
+			<div class="infoth txtfix">* : information théorique</div>
+			<div class="txtfix "><span>
+				
+			</span></div>
+		</div>
+	</div>
+	<br>
+	<details>
+		<summary>Afficher plus</summary>
+		<form>
+			<label for="arretForm"> Arrêt : (utilisez l'autocomplétion) </label>
+			<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;"><br>
+			<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
+			<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;"><br>
+			<datalist id="lignesForm-list">
+				<option>G2</option>
+				<option>G3</option>
+				<option>G4</option>
+				<option>G5</option>
+				<option>G6</option>
+				<option>G40</option>
+				<option>G50</option>
+				<option>G51</option>
+				<option>G60</option>
+				<option>G61</option>
+				<option>G70</option>
+				<option>NVA</option>
+				<option>NVB</option>
+				<option>NVC</option>
+			</datalist>
+
+			<datalist id="arretForm-list">
+				<option>Chamrousse, LE RECOIN VFD</option>
+				<option>Revel, REVEL ECOLES</option>
+				<option>Revel, LA FONTAINE</option>
+				<option>Revel, LA SARRAZINE</option>
+				<option>Domène, DOMENE MAIRIE</option>
+				<option>Domène, DOMENE LES ARNAUDS</option>
+				<option>Revel, REVEL LA BOURGEAT</option>
+				<option>Le Versoud, LA CHARRIERE</option>
+				<option>Le Versoud, ETAPES-MALVAISIN</option>
+				<option>Domène, LES VERNES</option>
+				<option>Domène, LE PRIEURE</option>
+				<option>Montbonnot-Saint-Martin, BAUDONNIERE</option>
+				<option>Saint-Jean-le-Vieux, ST JEAN LE VIEUX LA MONTA</option>
+				<option>Domène, RENE CASSIN</option>
+				<option>La Combe-de-Lancey, LE MAS JULIEN</option>
+				<option>Revel, LE GEYMOND</option>
+				<option>Saint-Jean-le-Vieux, LE RIF</option>
+				<option>Saint-Jean-le-Vieux, ST JEAN LE VIEUX LE MOLLARD</option>
+				<option>Revel, LES JACQUETS</option>
+				<option>Revel, CHARRIERES NEUVES</option>
+				<option>Revel, LES FAURES</option>
+				<option>Revel, REVEL LE MONT</option>
+				<option>Revel, LES ROUSSETS</option>
+				<option>Saint-Jean-le-Vieux, ST JEAN LE VIEUX EGLISE</option>
+				<option>Saint-Jean-le-Vieux, LE NAYSORD</option>
+				<option>Saint-Jean-le-Vieux, LE COUVAT</option>
+				<option>Saint-Jean-le-Vieux, L ISLE</option>
+				<option>Montbonnot-Saint-Martin, PRE MILLET</option>
+				<option>Montbonnot-Saint-Martin, INRIA</option>
+				<option>Saint-Ismier, ST ISMIER LA BATIE</option>
+				<option>Saint-Ismier, LES MILLETS</option>
+				<option>Saint-Ismier, LES VARCIAUX</option>
+				<option>Saint-Ismier, BOUFFIERE</option>
+				<option>Saint-Ismier, LE MANIVAL</option>
+				<option>Saint-Ismier, LE MEMORIAL</option>
+				<option>Saint-Ismier, GEYDAN GENISSIEUX</option>
+				<option>Saint-Ismier, CHEMIN DES BOUTS</option>
+				<option>Saint-Ismier, LOT. LABIS</option>
+				<option>Saint-Ismier, LE MOULIN</option>
+				<option>Saint-Ismier, COLLEGE DU GRESIVAUDAN - PARKING</option>
+				<option>Saint-Nazaire-les-Eymes, LES EYMES RD 1090</option>
+				<option>Saint-Nazaire-les-Eymes, LES RATZ</option>
+				<option>Saint-Nazaire-les-Eymes, LE PIAT</option>
+				<option>Le Versoud, COTE BELLE</option>
+				<option>Saint-Ismier, LE FANGEAT</option>
+				<option>Saint-Ismier, LES MARECHAUX</option>
+				<option>Saint-Nazaire-les-Eymes, ST NAZAIRE LES EYMES GARE</option>
+				<option>Saint-Nazaire-les-Eymes, LE LAVORS</option>
+				<option>Saint-Ismier, CHEMIN QUARTALLEES</option>
+				<option>Le Versoud, LA PLACE</option>
+				<option>Le Versoud, BELLE PLAINE</option>
+				<option>Saint-Ismier, ST ISMIER LES PLANTEES</option>
+				<option>Saint-Ismier, LYCEE HORTICOLE</option>
+				<option>Montbonnot-Saint-Martin, PRE DE L EAU</option>
+				<option>La Combe-de-Lancey, LA COMBE DE LANCEY LE VILLARD</option>
+				<option>La Combe-de-Lancey, LE PETIT CHATEAU</option>
+				<option>La Combe-de-Lancey, LE MAS LA RUE</option>
+				<option>La Combe-de-Lancey, LE MAS MONTACOL</option>
+				<option>Laval, LE BONNAT</option>
+				<option>Laval, LAVAL MAIRIE</option>
+				<option>La Combe-de-Lancey, LA COMBE DE LANCEY LE MONT</option>
+				<option>La Combe-de-Lancey, LES ECHARRAS</option>
+				<option>La Combe-de-Lancey, VILLARD D EN BAS</option>
+				<option>La Combe-de-Lancey, LA COMBE LA CHAPELLE</option>
+				<option>La Combe-de-Lancey, LE MAS VANNIER</option>
+				<option>Sainte-Agnès, ECOLE DE STE AGNES</option>
+				<option>Sainte-Agnès, LA VILLE</option>
+				<option>Saint-Mury-Monteymond, LE CHOLET</option>
+				<option>La Combe-de-Lancey, LE MAS LARY</option>
+				<option>Saint-Mury-Monteymond, CARREFOUR PRELONG</option>
+				<option>Saint-Mury-Monteymond, ST MURY CIMETIERE</option>
+				<option>Villard-Bonnot, LA MADONE</option>
+				<option>Villard-Bonnot, VORS</option>
+				<option>Villard-Bonnot, VILLARD BONNOT LA MAIRIE</option>
+				<option>Villard-Bonnot, LA POLOGNE</option>
+				<option>Villard-Bonnot, EGLISE - GENDARMERIE</option>
+				<option>Saint-Mury-Monteymond, L EGLISE</option>
+				<option>Sainte-Agnès, LA FAURE</option>
+				<option>Froges, BRIGNOUD PLACE</option>
+				<option>Villard-Bonnot, LE SABOT</option>
+				<option>Sainte-Agnès, LE MAS N° 2</option>
+				<option>Sainte-Agnès, STE AGNES LE MOLLARD</option>
+				<option>Sainte-Agnès, MAISON D ARGOUD AU RIF</option>
+				<option>Villard-Bonnot, LANCEY</option>
+				<option>Saint-Mury-Monteymond, LA PALLUD MATERNELLE</option>
+				<option>Villard-Bonnot, LYCEE M. REYNOARD - PARKING</option>
+				<option>Villard-Bonnot, CITE DES ROSES</option>
+				<option>Sainte-Agnès, STE AGNES LA BOURGEAT</option>
+				<option>Sainte-Agnès, LE FAY</option>
+				<option>Sainte-Agnès, STE AGNES LA GORGE</option>
+				<option>Le Versoud, CITE NOUVELLE</option>
+				<option>Le Versoud, PONT DE PRUNEY</option>
+				<option>Sainte-Agnès, LES GRANDS CHAMPS</option>
+				<option>Villard-Bonnot, LANCEY GARE</option>
+				<option>Saint-Mury-Monteymond, LE BANC</option>
+				<option>Villard-Bonnot, LYCEE RD.523</option>
+				<option>Saint-Mury-Monteymond, LE MAS VIEUX</option>
+				<option>Saint-Mury-Monteymond, LES COCHARDS</option>
+				<option>Villard-Bonnot, COLLEGE BELLEDONNE</option>
+				<option>Villard-Bonnot, PAPETERIES</option>
+				<option>Laval, LA BOUTIERE</option>
+				<option>Laval, PRABERT</option>
+				<option>Laval, LAVAL LE MOLLARD</option>
+				<option>Laval, LE FUZIER</option>
+				<option>Les Adrets, PRAPOUTEL PATTE D OIE</option>
+				<option>Laval, LE PLANEYSSARD ECOLE</option>
+				<option>Les Adrets, PRAPOUTEL GENDARMERIE</option>
+				<option>Laval, LE CARNIVAL</option>
+				<option>Sainte-Agnès, LE FAY N°2</option>
+				<option>Les Adrets, LES GENIEVRES</option>
+				<option>Laval, VAUGELAS BAS</option>
+				<option>Sainte-Agnès, LA PERRIERE</option>
+				<option>Sainte-Agnès, EPINGLE LA PERRIERE</option>
+				<option>Crolles, LA CROIX DES AYES</option>
+				<option>Saint-Pancrasse, ST PANCRASSE LA MAIRIE</option>
+				<option>Bernin, CROIX DES VARVOUX</option>
+				<option>Bernin, BERNIN P.T.T.</option>
+				<option>Bernin, VARVOUX LE BAS</option>
+				<option>Bernin, LES VARVOUX</option>
+				<option>Saint-Hilaire, LES MARGAINS</option>
+				<option>Bernin, LES REVOLEYS</option>
+				<option>Crolles, ST MICROELECTRONICS</option>
+				<option>Froges, ECOLE ELEMENTAIRE GUYNEMER</option>
+				<option>Froges, LE BOCCARD</option>
+				<option>Froges, PRE DU CHENE</option>
+				<option>Le Champ-près-Froges, LOT. LA TOUR</option>
+				<option>Froges, COQUILLARD</option>
+				<option>Le Champ-près-Froges, CHAMP PRES FROGES - LE MOLLARD</option>
+				<option>Crolles, RAFOUR CROIZAT</option>
+				<option>Froges, LANGENET</option>
+				<option>Le Champ-près-Froges, LE BAS</option>
+				<option>Le Champ-près-Froges, CHAMPALUD</option>
+				<option>Crolles, POMPIERS</option>
+				<option>Froges, CITE JARDINS</option>
+				<option>Froges, LES JAURES</option>
+				<option>Froges, LOT BALC. BELLEDONNE</option>
+				<option>Froges, ALLEE DES THUYAS</option>
+				<option>Froges, LE PLANET</option>
+				<option>Froges, LES BOIS</option>
+				<option>Froges, LE MAZARETIER</option>
+				<option>Froges, LES VIGNES DE PICHAT</option>
+				<option>Saint-Hilaire, PRE BENOIT</option>
+				<option>Saint-Hilaire, LES GANDINS</option>
+				<option>Froges, MAS PELIOUD</option>
+				<option>Froges, LES AYETTES</option>
+				<option>Les Adrets, L ENVERS</option>
+				<option>Les Adrets, ECOLE LES ADRETS</option>
+				<option>Les Adrets, ROUTE VIEUX MANEGE</option>
+				<option>Les Adrets, LES ALPETS</option>
+				<option>Les Adrets, VILLARD CHATEAU</option>
+				<option>Les Adrets, POUTAZ BAS</option>
+				<option>Les Adrets, LES AVONS</option>
+				<option>Les Adrets, PRES COMMUNAUX N°1</option>
+				<option>Les Adrets, PRES COMMUNAUX N°2</option>
+				<option>Les Adrets, LES FOURNELLES</option>
+				<option>Les Adrets, LA PITROUSE</option>
+				<option>Hurtières, HURTIERES LE HAUT</option>
+				<option>Hurtières, HURTIERES MAIRIE</option>
+				<option>Les Adrets, VILLARD BERNARD</option>
+				<option>Le Champ-près-Froges, CHAMP LE HAUT MAIRIE</option>
+				<option>Les Adrets, LES COMPTES</option>
+				<option>Froges, ROUARE</option>
+				<option>Hurtières, HURTIERES PLACE</option>
+				<option>Les Adrets, LE LANAT</option>
+				<option>Theys, THEYS ECOLES</option>
+				<option>Theys, LES AYES</option>
+				<option>Tencin, PRE SEC</option>
+				<option>Theys, ROUTE DES GAUTHIERS</option>
+				<option>Theys, LES GLAPIGNEUX</option>
+				<option>Theys, LES COMBES D EN BAS</option>
+				<option>Theys, LE BOURGUIGNON</option>
+				<option>Theys, LES BERTS</option>
+				<option>Theys, LES VALLINS</option>
+				<option>Theys, PIERRE HERSE</option>
+				<option>Theys, LES COMBES D EN HAUT</option>
+				<option>La Pierre, LA PIERRE - CARR. RD 523</option>
+				<option>Theys, LOUTRE</option>
+				<option>Theys, LA TOUR</option>
+				<option>Theys, LA MAISON BLANCHE</option>
+				<option>Les Adrets, LES FOURNACHES</option>
+				<option>Theys, THEYS LA ROCHE</option>
+				<option>Theys, GORGE D OR</option>
+				<option>Theys, LES ESSARTS</option>
+				<option>Les Adrets, LES BLETTIERES</option>
+				<option>Theys, GLAPIGNEUX DESSOUS</option>
+				<option>Les Adrets, LE PRE</option>
+				<option>La Ferrière, LA MARTINETTE</option>
+				<option>La Ferrière, FOND DE FRANCE</option>
+				<option>La Ferrière, LE PLEYNET</option>
+				<option>La Ferrière, CAMOREL</option>
+				<option>La Ferrière, LA FERRIERE LA CHAPELLE</option>
+				<option>La Ferrière, LES MILLETS C.V.O.</option>
+				<option>La Terrasse, INSTITUT</option>
+				<option>Saint-Bernard, LES VIROILLES</option>
+				<option>Saint-Bernard, HAMEAU ST MICHEL</option>
+				<option>Saint-Bernard, LE PRAYER</option>
+				<option>Saint-Bernard, LE TERRAIL</option>
+				<option>Saint-Bernard, LE COMBET</option>
+				<option>Saint-Bernard, ST BERNARD DU TOUVET LA BATIE</option>
+				<option>Saint-Bernard, LES PELLOUX</option>
+				<option>Saint-Hilaire, LES CHATAINS</option>
+				<option>Saint-Hilaire, LA CROIX DES EYRAUDS</option>
+				<option>Saint-Bernard, LA DIAT</option>
+				<option>Saint-Hilaire, MAT. LES GANDINS</option>
+				<option>Saint-Hilaire, LES VIALS</option>
+				<option>Saint-Bernard, LES GUILLOTS</option>
+				<option>Saint-Hilaire, ECOLE DES GAUDES</option>
+				<option>Saint-Hilaire, LES MASSARDS</option>
+				<option>Le Touvet, LA FRETTE</option>
+				<option>La Terrasse, LACHAT</option>
+				<option>La Terrasse, LE BURLET</option>
+				<option>Le Touvet, MONTABON</option>
+				<option>Goncelin, GONCELIN GARE</option>
+				<option>Tencin, MONTGALMAND</option>
+				<option>Le Touvet, LA CONCHE</option>
+				<option>Goncelin, VILLARD BOZON</option>
+				<option>Theys, LE CARRET</option>
+				<option>Tencin, GRANDES TERRES</option>
+				<option>Theys, LE GRE</option>
+				<option>Tencin, LE CLOS DU CEDRE</option>
+				<option>Goncelin, COLLEGE ICARE</option>
+				<option>Goncelin, COLLEGE RD.523</option>
+				<option>Theys, LA COCHE</option>
+				<option>Crêts en Belledonne, LA CASSEY</option>
+				<option>Theys, LES VINCENTS</option>
+				<option>Crêts en Belledonne, LE LEVET</option>
+				<option>Crêts en Belledonne, LE VOLEY</option>
+				<option>Crêts en Belledonne, LES AMICONS</option>
+				<option>La Ferrière, LE CURTILLARD</option>
+				<option>La Ferrière, VILLAGE-ECOLES</option>
+				<option>La Ferrière, LE PETIT THIERVOZ</option>
+				<option>La Ferrière, LE GRAND THIERVOZ</option>
+				<option>Pinsot, LA PIAT</option>
+				<option>Allevard, LE DAVID</option>
+				<option>Allevard, LE COLLET D ALLEVARD</option>
+				<option>Le Cheylas, LE MERCIER RD523</option>
+				<option>Sainte-Marie-du-Mont, LA CHAPELLE</option>
+				<option>Saint-Bernard, COL DE MARCIEU</option>
+				<option>Sainte-Marie-du-Mont, LE VILLARD</option>
+				<option>Sainte-Marie-du-Mont, LA VIEILLE EGLISE</option>
+				<option>Saint-Bernard, LOTISSEMENT MARCIEU</option>
+				<option>Le Cheylas, LES MEYANNES</option>
+				<option>Le Cheylas, LE CHEYLAS - LA MAIRIE</option>
+				<option>Le Cheylas, LE CHEYLAS GARE  D.523</option>
+				<option>Le Cheylas, LE CHEYLAS LE MERCIER</option>
+				<option>Le Cheylas, LE ROMPAY</option>
+				<option>La FlachÃ¨re, LA FLACHERE MAIRIE</option>
+				<option>Crêts en Belledonne, BEAUREGARD</option>
+				<option>Sainte-Marie-d'Alloix, STE MARIE D ALLOIX LE VILLAGE</option>
+				<option>La FlachÃ¨re, LA FLACHERE ECOLE</option>
+				<option>Saint-Vincent-de-Mercuze, CAVE COOPERATIVE</option>
+				<option>Le Touvet, LA CIME</option>
+				<option>Le Touvet, LE SAINT JEAN</option>
+				<option>Le Touvet, COLLEGE LA PIERRE  AIGUILLE</option>
+				<option>Le Touvet, LE TOUVET GARE</option>
+				<option>Saint-Vincent-de-Mercuze, ST VINCENT MERCUZE LA PISCINE</option>
+				<option>Crêts en Belledonne, LE TRAIT</option>
+				<option>Crêts en Belledonne, LE CHAPELAT</option>
+				<option>Crêts en Belledonne, MAILLES</option>
+				<option>Saint-Vincent-de-Mercuze, ST VINCENT DE MERCUZE MAIRIE</option>
+				<option>Saint-Vincent-de-Mercuze, LE MONTALIEU</option>
+				<option>Le Cheylas, LES BLEUETS</option>
+				<option>Saint-Vincent-de-Mercuze, LA FUMAS</option>
+				<option>Saint-Vincent-de-Mercuze, ST VINCENT LA BRANCHY</option>
+				<option>Saint-Vincent-de-Mercuze, GS DOUDART DE LAGREE</option>
+				<option>Saint-Vincent-de-Mercuze, LOT. DE LA BARDE</option>
+				<option>Le Cheylas, LE CHEYLAS LE VILLARD</option>
+				<option>Le Touvet, TOUVET MATERNELLE</option>
+				<option>Saint-Vincent-de-Mercuze, RUE HAUSSEPIED</option>
+				<option>Le Cheylas, LE TROUILLET</option>
+				<option>Allevard, LES MORETS</option>
+				<option>Allevard, LE  DAVID</option>
+				<option>Allevard, HAMEAU MONTOUVRARD</option>
+				<option>Crêts en Belledonne, ST PIERRE ECOLES</option>
+				<option>Crêts en Belledonne, LE CATUS</option>
+				<option>Crêts en Belledonne, SAILLES LE BAS</option>
+				<option>Crêts en Belledonne, LE GUILLON</option>
+				<option>Crêts en Belledonne, LE RIGARD</option>
+				<option>Crêts en Belledonne, SAILLES LE HAUT</option>
+				<option>Crêts en Belledonne, MONTGOUTOUX</option>
+				<option>Crêts en Belledonne, LE CHABOUD</option>
+				<option>Crêts en Belledonne, GORGE NOIRE</option>
+				<option>Crêts en Belledonne, CRETS EN BELLEDONNE LE VILLAGE</option>
+				<option>Crêts en Belledonne, LE BEROUD</option>
+				<option>Crêts en Belledonne, LE CARIGNON</option>
+				<option>Crêts en Belledonne, LE FEYJOUX</option>
+				<option>Crêts en Belledonne, LES GRANGES</option>
+				<option>Crêts en Belledonne, LES COTTERIAUX</option>
+				<option>Le Cheylas, L ABBAYE</option>
+				<option>Pinsot, PINSOT LE VILLAGE</option>
+				<option>Pinsot, CHINFERT</option>
+				<option>Pinsot, HOT PIC BELLE ETOILE</option>
+				<option>Sainte-Marie-du-Mont, LES PRES  MAIRIE</option>
+				<option>Barraux, CIMETIERE</option>
+				<option>Barraux, HAMEAU LA CUILLER</option>
+				<option>Barraux, LA CORVA</option>
+				<option>Barraux, LE RESERVOIR</option>
+				<option>La Buissière, LA BERARDE</option>
+				<option>Barraux, LE BOISSIEU PONT</option>
+				<option>La Buissière, LA BUISSIERE LES GRANGES</option>
+				<option>La Buissière, LA BUISSIERE ECOLE</option>
+				<option>Barraux, BARRAUX MATERNELLE</option>
+				<option>Pontcharra, LYCEE P. DU TERRAIL - BREDA</option>
+				<option>La FlachÃ¨re, LE BOISSIEU LOT</option>
+				<option>Sainte-Marie-du-Mont, HAMEAU DE ST GEORGES</option>
+				<option>Barraux, BARRAUX EC.PRIMAIRE</option>
+				<option>Barraux, LE PUITS</option>
+				<option>Barraux, LE FAYET</option>
+				<option>Barraux, BARRAUX LOT. BEAUREG</option>
+				<option>Pontcharra, JAVEYDAN</option>
+				<option>Pontcharra, MALBOURGET</option>
+				<option>Chapareillan, ST MARCEL D EN HAUT</option>
+				<option>Pontcharra, COLLEGE MARCEL CHENE</option>
+				<option>Pontcharra, VILLARD DIDIER</option>
+				<option>Pontcharra, LYCEE P. DU TERRAIL</option>
+				<option>Barraux, BARRAUX LE VILLAGE</option>
+				<option>Pontcharra, PONTCHARRA GARE</option>
+				<option>Pontcharra, VILLARD NOIR</option>
+				<option>La FlachÃ¨re, LA FLACHERE GARE</option>
+				<option>La Buissière, LA MALADIERE</option>
+				<option>Allevard, PANORAMIC</option>
+				<option>Allevard, LE CLOSY</option>
+				<option>Pontcharra, PONTCHARRA LA MAIRIE</option>
+				<option>Pontcharra, CHALLEYS</option>
+				<option>Pontcharra, PAPILLARD</option>
+				<option>Pontcharra, LE MARAIS</option>
+				<option>Pontcharra, MONTAUCHER</option>
+				<option>Pontcharra, VILLARD NOIR LES PLANTEES</option>
+				<option>Pontcharra, AVENUE DU GRANIER</option>
+				<option>Pontcharra, LE PAPET</option>
+				<option>Saint-Maximin, ST MAXIMIN LA MAIRIE</option>
+				<option>La Chapelle-du-Bard, BEAUVOIR</option>
+				<option>Allevard, LA RATZ</option>
+				<option>Allevard, LE COLOMBIER</option>
+				<option>La Chapelle-du-Bard, LA CHAPELLE LA GORGE</option>
+				<option>La Chapelle-du-Bard, LA CHAPELLE ECOLE</option>
+				<option>La Chapelle-du-Bard, MONTGAREN</option>
+				<option>Le Moutaret, LE MOUTARET LE VILLAGE</option>
+				<option>Le Moutaret, FREYDON</option>
+				<option>Le Moutaret, LES MASURES</option>
+				<option>La Chapelle-du-Bard, LE BUISSON</option>
+				<option>Chapareillan, EC PRIVEE BELLECOUR</option>
+				<option>Chapareillan, CHAPAREILLAN GARE</option>
+				<option>Chapareillan, LES ATRUS</option>
+				<option>Chapareillan, COTAGNIERS</option>
+				<option>Chapareillan, LES GIROUDS</option>
+				<option>Chapareillan, LA PALUD</option>
+				<option>Chapareillan, L ETRAZ</option>
+				<option>Chapareillan, CHAPAREILLAN MAIRIE</option>
+				<option>Chapareillan, ST MARCEL D EN BAS</option>
+				<option>Chapareillan, BELLECOMBETTE</option>
+				<option>Chapareillan, LA MEUNIERE</option>
+				<option>Chapareillan, CHAPAREILLAN ECOLE</option>
+				<option>Chapareillan, BELLECOMBE</option>
+				<option>Chapareillan, LES GAILLONS</option>
+				<option>Saint-Bernard, ST BERNARD EGLISE</option>
+				<option>Saint-Ismier, LE RIVET</option>
+				<option>Meylan, NORBERT SEGARD</option>
+				<option>Meylan, BUSSEROLLES</option>
+				<option>La Chapelle-du-Bard, PLAN POUCET</option>
+				<option>Pontcharra, RESIDENCES BAYARD</option>
+				<option>Pontcharra, LYCEE AV DE LA GARE</option>
+				<option>La Buissière, CHATEAU</option>
+				<option>Allevard, COLLEGE FLAVIUS VAUSSENAT</option>
+				<option>Saint-Nazaire-les-Eymes, ST NAZAIRE LES EYMES MAIRIE</option>
+				<option>Saint-Nazaire-les-Eymes, TRANSFORMATEUR</option>
+				<option>Le Cheylas, LES CHABERTS</option>
+				<option>Laval, LA TAILLAT</option>
+				<option>Laval, LE CARNIVAL LANCELOT</option>
+				<option>La Chapelle-du-Bard, REVIT</option>
+				<option>La Chapelle-du-Bard, PONT DU BENS</option>
+				<option>Le Touvet, LE TOUVET GENDARMERIE</option>
+				<option>Les Adrets, LES AVONS 2</option>
+				<option>Crêts en Belledonne, PLANCHAMPS</option>
+				<option>Allevard, LE GLAPIGNEUX</option>
+				<option>Allevard, ALLEVARD LE MOLLARD</option>
+				<option>Allevard, LA TOUR DU TREUIL</option>
+				<option>La Buissière, PATTE D OIE</option>
+				<option>Pontcharra, ECOLE CESAR TERRIER</option>
+				<option>Le Cheylas, LES VIGNASSES</option>
+				<option>Pontcharra, LA TREILLE</option>
+				<option>Saint-Ismier, LE CLOS DU MARS</option>
+				<option>Chamrousse, LE RECOIN OT</option>
+				<option>Pontcharra, MEDIATHEQUE</option>
+				<option>Pontcharra, VILLAGE D ENTREPRISES</option>
+				<option>Pontcharra, PONTCHARRA PISCINE</option>
+				<option>Crolles, TEISSEIRE</option>
+				<option>Le Cheylas, LE CHEYLAS USINES</option>
+				<option>Le Cheylas, LE CHEYLAS ECOLES</option>
+				<option>Saint-Martin-d'Uriage, CHENEVARIE</option>
+				<option>Saint-Martin-d'Uriage, LA PEREREE</option>
+				<option>Saint-Martin-d'Uriage, CORPS D URIAGE</option>
+				<option>Saint-Martin-d'Uriage, IZARDS PATTE D'OIE</option>
+				<option>Saint-Martin-d'Uriage, LE PINET D URIAGE</option>
+				<option>Saint-Martin-d'Uriage, CARREFOUR DU REPLAT</option>
+				<option>Saint-Martin-d'Uriage, HAUTES VUES</option>
+				<option>Saint-Martin-d'Uriage, ST NIZIER D URIAGE</option>
+				<option>Gières, GIERES GARE</option>
+				<option>Montbonnot-Saint-Martin, MONTBONNOT LA PISCINE</option>
+				<option>Allevard, BESSEY</option>
+				<option>Allevard, GUILLET</option>
+				<option>Villard-Bonnot, GRANDE ILE</option>
+				<option>Montbonnot-Saint-Martin, CH DE LA CROIX VERTE</option>
+				<option>Montbonnot-Saint-Martin, ECOLE DES CHAVANNES</option>
+				<option>Allevard, MUSEE JADIS</option>
+				<option>Allevard, LES PANISSIERES</option>
+				<option>Saint-Maximin, ST MAXIMIN LA COMBE</option>
+				<option>Saint-Maximin, AVALLON</option>
+				<option>Saint-Maximin, LES BRUNS</option>
+				<option>Saint-Maximin, RIPPELETS</option>
+				<option>Saint-Maximin, BRETONNIERES</option>
+				<option>Allevard, LES AMOUREUX</option>
+				<option>Allevard, AVENUE DE SAVOIE</option>
+				<option>La Combe-de-Lancey, LA SCIERIE</option>
+				<option>Chapareillan, RUE DES NOYERS</option>
+				<option>Lumbin, ESAT</option>
+				<option>Chapareillan, ALLIBERT TREKKING</option>
+				<option>La Chapelle-du-Bard, LE ROZAT</option>
+
+			</datalist>
+
+			<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value);">Valider</button>
+
+		</form>
+		<a href="index.html"><button>Retour à l'index</button></a>
+	</details>
+</body>
+</html>

@@ -96,3 +96,15 @@ details {
 	margin: 1% 3% 1%;
 	padding: 1% 2% 1% 2%;
 }
+
+#imgIGdev {
+	height: 120%;
+	display: flex;
+	flex-direction: row-reverse;
+	border-bottom: 10px
+}
+
+#credit {
+	display: flex;
+	margin-bottom: 150px
+}

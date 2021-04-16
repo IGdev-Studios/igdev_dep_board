@@ -95,6 +95,7 @@ img {
 	display: grid;
 	align-items: center;
 	padding: 10px 0;
+
 	/*row-gap: 10px;*/
 }
 .infoth {
@@ -102,7 +103,7 @@ img {
 	justify-content: flex-end;
 }
 div.time-txt>span, div.version>span {
-	font-size: 30px;
+	font-size: 20px;
 	display: flex;
 	align-content: center;
 }

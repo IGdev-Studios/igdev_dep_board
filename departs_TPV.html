@@ -1,0 +1,624 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<!-- Version 0.9-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href=favicon.ico> 
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<script src="js/script_tpv.js"></script>
+	<script src="js/stopsAndLines_tpv.js"></script>
+	<script>
+		function loading(){
+			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTPV'));
+			HTMLContent = "Prochains départs " + LinesAndStop.arret;
+			document.title = LinesAndStop.arret;
+			document.getElementById('main').innerHTML = HTMLContent;
+			document.getElementById('arretForm').value = LinesAndStop.arret;
+			document.getElementById('lignesForm').value = LinesAndStop.lines;
+		}
+		async function refresh(){
+			let schedules = await getSchedules();
+			if(schedules == "Aucun passage de prévu"){
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				document.getElementById('passages').innerHTML = HTMLContent;
+			}else{
+				let finalSchedules = sort(schedules);
+
+				HTMLContent = "";
+				
+				if(finalSchedules.length >= 4){
+					for (let i = 0; i <= 3; i++) {
+						if(finalSchedules[i].time >= 0){
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
+							HTMLContent += finalSchedules[i].line;
+							HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/></div><div class="dest-txt">';
+							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
+							if(finalSchedules[i].time == 0){
+								HTMLContent += "<1";
+								HTMLContent += "min";
+							}else if(finalSchedules[i].time >= 60){
+								HTMLContent += minutesToHours(finalSchedules[i].time);
+
+							}else{
+								HTMLContent += finalSchedules[i].time;
+								HTMLContent += "min";
+							}
+							if(finalSchedules[i].realtime != true){
+								HTMLContent += "*";
+							}
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+					}
+				}else{
+					finalSchedules.forEach(element => {
+						if(element.time >= 0){
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
+							HTMLContent += element.line;
+							HTMLContent += '_600px.png" alt="'+ element.line + '"/></div><div class="dest-txt">';
+							HTMLContent += element.lastStop + '</div><div class="time-txt">';
+							if(element.time == 0){
+								HTMLContent += "<1";
+								HTMLContent += "min";
+							}else if(element.time >= 60){
+								HTMLContent += minutesToHours(element.time);
+
+							}else{
+								HTMLContent += element.time;
+								HTMLContent += "min";
+							}
+							if(element.realtime != true){
+								HTMLContent += "*";
+							}
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+
+					});
+				}
+
+				
+
+				document.getElementById('passages').innerHTML = HTMLContent;
+
+			}
+		};
+		setInterval(function(){ 
+			refresh();   
+		}, 15000);
+		setInterval(function(){ 
+			let time = getTime();  
+			document.getElementById('time').innerHTML = time;
+			
+		}, 1000);
+	</script>
+	<title>TPV Departure board</title>
+</head>
+<body onload="document.getElementById('time').innerHTML = getTime(); checkSaved(); loading(); refresh();">
+	
+	<div id="cadre"><!-- Cadre Noir-->
+		<div class="main-grid">
+			<div class="main" id="main">Prochains départs</div>
+			<div class="heure"><span id="time">88:88</span></div>
+		</div>
+		<div class="ligneblanche"></div>
+		<div class="txtfix colfix"><!-- Ligne texte-->
+			<div class="">Ligne</div>
+			<div class="">Destination</div>
+			<div class="">Temps d'attente</div>
+		</div>
+		<div id="surcadre"> <!--Cadre blanc -->
+			<div id="passages">
+				<div class="colfix dest-ligne">
+					<div class="ligne-img">
+						-
+					</div>
+					<div class="dest-txt">
+						Chargement
+					</div>
+					<div class="time-txt">
+						-
+					</div>
+				</div>
+				<div class="lignegrise"></div>
+			</div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Logo_Pays_Voironnais_Mobilit%C3%A9.svg/1024px-Logo_Pays_Voironnais_Mobilit%C3%A9.svg.png" alt="TAG"></div>
+				<div class="dest-txt">Prenez de l'avance</div>
+				<div class="time-txt"><img src="img/IGdev.png" alt="IGdev" /><span>
+					V0.9				
+				</span></div>
+			</div>
+		</div>
+		<div class="colfix">
+			<div></div>
+			<div class="infoth txtfix">* : information théorique</div>
+			<div class="txtfix "><span>
+				
+			</span></div>
+		</div>
+	</div>
+	<br>
+	<details>
+		<summary>Afficher plus</summary>
+		<form>
+			<label for="arretForm"> Arrêt : (utilisez l'autocomplétion) </label>
+			<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;"><br>
+			<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
+			<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;"><br>
+			<datalist id="lignesForm-list">
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>10</option>
+				<option>20</option>
+				<option>A</option>
+				<option>D</option>
+				<option>E</option>
+				<option>F</option>
+				<option>L</option>
+				<option>N</option>
+				<option>W</option>
+				<option>LAC</option>
+				<option>TAD-C</option>
+				<option>TAD-D</option>
+				<option>TAD-E</option>
+				<option>TAD-F</option>
+				<option>TAD-G</option>
+				<option>TAD-W</option>
+				<option>TADHOP</option>
+			</datalist>
+
+			<datalist id="arretForm-list">
+				<option>Apprieu, APPRIEU LE RIVIER ECOLE</option>
+<option>Bilieu, BARDONNET</option>
+<option>Bilieu, CHANTARET</option>
+<option>Bilieu, LES MAURES</option>
+<option>Bilieu, PETIT BILIEU</option>
+<option>Bilieu, ROUTE DE CHARAVINES</option>
+<option>Bilieu, VILLAGE</option>
+<option>Charancieu, CENTRE</option>
+<option>Charancieu, ZA CHARANCIEU</option>
+<option>Charavines, BERNARDIERE</option>
+<option>Charavines, FORGES</option>
+<option>Charavines, GARE</option>
+<option>Charavines, GUILLERMET</option>
+<option>Charavines, JACQUIN</option>
+<option>Charavines, OFFICE DE TOURISME</option>
+<option>Charavines, PAPETERIE</option>
+<option>Charavines, PLACE DU MARCHE</option>
+<option>Charavines, VIRAGE JANIN</option>
+<option>Charnècles, 6 CHEMINS</option>
+<option>Charnècles, FERME BOURDIS</option>
+<option>Charnècles, LES RIVOIRES</option>
+<option>Charnècles, LEZARDIERES PT</option>
+<option>Charnècles, MAIRIE</option>
+<option>Charnècles, PLACE</option>
+<option>Charnècles, PONT DE BOIS VERT</option>
+<option>Chirens, CLERMONT</option>
+<option>Chirens, COLLEGE</option>
+<option>Chirens, GARANGERE</option>
+<option>Chirens, GUILLETIERE</option>
+<option>Chirens, L'ARSENAL</option>
+<option>Chirens, LE FAGOT</option>
+<option>Chirens, LE GAYET</option>
+<option>Chirens, TOUR CLERMONT</option>
+<option>Chirens, VILLAGE</option>
+<option>Coublevie, BARRIOZ</option>
+<option>Coublevie, BARTHELON</option>
+<option>Coublevie, BEAUREGARD</option>
+<option>Coublevie, BOUVIER DIVAT</option>
+<option>Coublevie, CHEMAIN DE LA GRANDE SURE</option>
+<option>Coublevie, COLLEGE PLAN MENU</option>
+<option>Coublevie, CROIX BAYARD</option>
+<option>Coublevie, ECOLE DU BERARD</option>
+<option>Coublevie, HOPITAL</option>
+<option>Coublevie, LAFAILLE</option>
+<option>Coublevie, LAVOIR DU NEYROUD</option>
+<option>Coublevie, LE BRET</option>
+<option>Coublevie, LES NOYERS</option>
+<option>Coublevie, MAIRIE</option>
+<option>Coublevie, MAISON DE RETRAITE</option>
+<option>Coublevie, MFR DALMASSIERE</option>
+<option>Coublevie, MOLLARD</option>
+<option>Coublevie, NEYROUD</option>
+<option>Coublevie, ORGEOISE</option>
+<option>Coublevie, PARKING PLAN MENU</option>
+<option>Coublevie, PILET</option>
+<option>Coublevie, PLACE DU 19 MARS 1962</option>
+<option>Coublevie, PLACE E. BROCHIER</option>
+<option>Coublevie, ROUTE DE LA BUISSE</option>
+<option>Coublevie, ROUTE DE ST JEAN</option>
+<option>Coublevie, ROUTE DES GORGES</option>
+<option>Coublevie, RUE DU 11 NOV 1918</option>
+<option>Coublevie, TIVOLIERE</option>
+<option>Coublevie, ZA DU ROULET</option>
+<option>Fontanil-Cornillon, CROIX DE ROCHETTE</option>
+<option>Fontanil-Cornillon, LEP F. DOLTO</option>
+<option>Fontanil-Cornillon, PALLUEL</option>
+<option>La Bâtie-Divisin, MAIRIE</option>
+<option>La Buisse, AFIPH</option>
+<option>La Buisse, CHEMIN DU GAY</option>
+<option>La Buisse, ECOLES</option>
+<option>La Buisse, GRAND CHAMP</option>
+<option>La Buisse, LE GAY</option>
+<option>La Buisse, LE GAY GIRATOIRE</option>
+<option>La Buisse, LE PANSU</option>
+<option>La Buisse, PLACE</option>
+<option>La Buisse, RESSOURCERIE</option>
+<option>La Buisse, CENTR'ALP : ROSSIGNOL</option>
+<option>La Murette, LA COURATIERE</option>
+<option>La Murette, LE PAYSAN</option>
+<option>La Murette, VILLAGE</option>
+<option>Le Pin, BREZIN BOURG</option>
+<option>Le Pin, CARREFOUR BREZIN</option>
+<option>Le Pin, CENTRE EQUESTRE</option>
+<option>Le Pin, LA CUAZ</option>
+<option>Le Pin, LES ALLEX</option>
+<option>Le Pin, PLACE SAINT CHRISTOPHE</option>
+<option>Le Pin, VERS ARS</option>
+<option>Massieu, COTE D'AINAN</option>
+<option>Massieu, LA SARRA</option>
+<option>Massieu, VILLAGE</option>
+<option>Merlas, BOUTIERE</option>
+<option>Merlas, CHAPELLE DE MERLAS</option>
+<option>Merlas, FAGOTIERE</option>
+<option>Merlas, LAYAT BAS</option>
+<option>Merlas, LE BURLET</option>
+<option>Merlas, LES ECHELLES</option>
+<option>Merlas, LES GORGES</option>
+<option>Merlas, MERLIETTE</option>
+<option>Merlas, NOUVELIERE</option>
+<option>Merlas, PICOUDIERE</option>
+<option>Merlas, PIVOTIERE</option>
+<option>Merlas, REYSSABOT</option>
+<option>Merlas, ST SIXTE</option>
+<option>Merlas, VILLAGE</option>
+<option>Miribel-les-Échelles, EGLISE</option>
+<option>Miribel-les-Échelles, LES EMPTAZ</option>
+<option>Miribel-les-Échelles, ST ROCH</option>
+<option>Miribel-les-Échelles, ST AUPRE LE VERNEY</option>
+<option>Moirans, MOIRANS BOIS DU FOUR</option>
+<option>Moirans, BOULODROME</option>
+<option>Moirans, CAMPALOUD</option>
+<option>Moirans, CHALET</option>
+<option>Moirans, CHAMPFEUILLET</option>
+<option>Moirans, COLLEGE VERGERON</option>
+<option>Moirans, COSTE GAZ</option>
+<option>Moirans, COTE DES FILLES</option>
+<option>Moirans, DELLORENZI</option>
+<option>Moirans, ECHEVINS</option>
+<option>Moirans, ESPACE JAIL</option>
+<option>Moirans, GARE SNCF</option>
+<option>Moirans, LE PAVILLET</option>
+<option>Moirans, LES BALMES</option>
+<option>Moirans, LES VIOLETTES</option>
+<option>Moirans, LESARDIERE</option>
+<option>Moirans, LOUIS MOYROUD</option>
+<option>Moirans, LYCEE BEGHIN</option>
+<option>Moirans, LYCEE PIERRE BEGHIN</option>
+<option>Moirans, MAISONNEUVE</option>
+<option>Moirans, MANGUELY</option>
+<option>Moirans, MEDIATHEQUE</option>
+<option>Moirans, MONTMARTEL</option>
+<option>Moirans, NOVESPACE POMMARIN</option>
+<option>Moirans, OUVRIERS PAPETIERS</option>
+<option>Moirans, PARC DE LA GRILLE</option>
+<option>Moirans, PETIT CHAMP FREY</option>
+<option>Moirans, PETIT CRIEL</option>
+<option>Moirans, POMPIERS</option>
+<option>Moirans, RI D'OLON</option>
+<option>Moirans, RUE DE LA COSTE</option>
+<option>Moirans, RUE DU 8 MAI 1945</option>
+<option>Moirans, SAINT JACQUES</option>
+<option>Moirans, SCHNEIDER</option>
+<option>Moirans, THALES LCD</option>
+<option>Moirans, CROIX ROUSSE</option>
+<option>Moirans, VOUREY MONNAIR</option>
+<option>Montferrat, 4 CHEMINS</option>
+<option>Montferrat, JALAMION</option>
+<option>Montferrat, LA GARENNE</option>
+<option>Montferrat, LAC BLEU</option>
+<option>Montferrat, LE VERNEY</option>
+<option>Montferrat, LES ETEPPES</option>
+<option>Montferrat, MUSEE</option>
+<option>Montferrat, VERONNIERE</option>
+<option>Montferrat, VILLAGE EGLISE</option>
+<option>Paladru, CALATRIN</option>
+<option>Paladru, GARAGE RENAULT</option>
+<option>Paladru, LA TRUITIERE</option>
+<option>Paladru, LES TROIX CHENES</option>
+<option>Paladru, SAINT PIERRE DE PALADRU</option>
+<option>Paladru, STADE</option>
+<option>Paladru, VILLAGE</option>
+<option>Pommiers-la-Placette, COL DE LA PLACETTE</option>
+<option>Pommiers-la-Placette, LES BARNIERS</option>
+<option>Pommiers-la-Placette, PALLACHERE</option>
+<option>Pommiers-la-Placette, QUATRE BRAS</option>
+<option>Pommiers-la-Placette, RD520 VILLAGE</option>
+<option>Pommiers-la-Placette, TENNIS</option>
+<option>Réaumont, BOURG ECOLE</option>
+<option>Réaumont, CHEMIN DU MOULIN</option>
+<option>Réaumont, LE BAYARD</option>
+<option>Réaumont, LE BESSEY</option>
+<option>Réaumont, LE CARRET</option>
+<option>Réaumont, LE CARRET TRANSFO</option>
+<option>Réaumont, LE MOURET</option>
+<option>Réaumont, VILLAGE</option>
+<option>Renage, CHATEAU</option>
+<option>Renage, EGLISE</option>
+<option>Renage, LA CROZE</option>
+<option>Renage, LES PRAIRIES</option>
+<option>Renage, PLACE CARDINALE</option>
+<option>Renage, ZA LE PLAN</option>
+<option>Rives, ABATTOIRS</option>
+<option>Rives, ALLIMAND</option>
+<option>Rives, BAS RIVES</option>
+<option>Rives, BERLIOZ</option>
+<option>Rives, CHARTREUSE</option>
+<option>Rives, CLOS JUVIN</option>
+<option>Rives, COLLEGE R. DESNOS</option>
+<option>Rives, COURBATIERE</option>
+<option>Rives, GARE SNCF</option>
+<option>Rives, JEAN JAURES</option>
+<option>Rives, LEVATEL</option>
+<option>Rives, LIBERATION</option>
+<option>Rives, MAISON DE RETRAITE</option>
+<option>Rives, MALADIERE</option>
+<option>Rives, PASTIERES</option>
+<option>Rives, PLACE X. BROCHIER</option>
+<option>Rives, SADI CARNOT</option>
+<option>Saint-Aupre, BARREAU</option>
+<option>Saint-Aupre, BEC FIN</option>
+<option>Saint-Aupre, CHAMPTORAZ</option>
+<option>Saint-Aupre, CHEVALLIER</option>
+<option>Saint-Aupre, CHEVILLARD</option>
+<option>Saint-Aupre, COLOMBIER</option>
+<option>Saint-Aupre, DELPHIN</option>
+<option>Saint-Aupre, GRAND VIVIER</option>
+<option>Saint-Aupre, LE GRAND CHEMIN</option>
+<option>Saint-Aupre, MARGARON</option>
+<option>Saint-Aupre, ROSSETIERE</option>
+<option>Saint-Aupre, TURE</option>
+<option>Saint-Aupre, VILLAGE</option>
+<option>Saint-Blaise-du-Buis, BONPERTUIS</option>
+<option>Saint-Blaise-du-Buis, LE GUICHARD</option>
+<option>Saint-Blaise-du-Buis, CHATELARD</option>
+<option>Saint-Blaise-du-Buis, CIMETIERE</option>
+<option>Saint-Blaise-du-Buis, DEVEZ</option>
+<option>Saint-Blaise-du-Buis, GRAND VOYE</option>
+<option>Saint-Blaise-du-Buis, MAIRIE</option>
+<option>Saint-Blaise-du-Buis, PETIT VOYE</option>
+<option>Saint-Blaise-du-Buis, RAVIGNHOUSE</option>
+<option>Saint-Blaise-du-Buis, ROUTE DU RIVIER</option>
+<option>Saint-Blaise-du-Buis, RTE DE LA MURETTE</option>
+<option>Saint-Blaise-du-Buis, ZA LE TALAMUD</option>
+<option>Saint-Bueil, LA ROCHE</option>
+<option>Saint-Bueil, LE SATRE</option>
+<option>Saint-Bueil, RD82</option>
+<option>Saint-Cassien, HALTE FERROVIAIRE</option>
+<option>Saint-Cassien, EGLISE</option>
+<option>Saint-Cassien, LE ROYER</option>
+<option>Saint-Cassien, LE SAPIN</option>
+<option>Saint-Cassien, MALOZA</option>
+<option>Saint-Étienne-de-Crossey, CARREF GD VIVIER</option>
+<option>Saint-Étienne-de-Crossey, CHARRAT</option>
+<option>Saint-Étienne-de-Crossey, COUCHONNIERE</option>
+<option>Saint-Étienne-de-Crossey, ETANG DAUPHIN</option>
+<option>Saint-Étienne-de-Crossey, GATELIERE</option>
+<option>Saint-Étienne-de-Crossey, LE PARIS</option>
+<option>Saint-Étienne-de-Crossey, LE PERRIN</option>
+<option>Saint-Étienne-de-Crossey, LE PICARD</option>
+<option>Saint-Étienne-de-Crossey, LE VIVIER</option>
+<option>Saint-Étienne-de-Crossey, LES GROS</option>
+<option>Saint-Étienne-de-Crossey, LES REYNAUDS</option>
+<option>Saint-Étienne-de-Crossey, LES ROUX</option>
+<option>Saint-Étienne-de-Crossey, POMPIERS</option>
+<option>Saint-Étienne-de-Crossey, TOLVON</option>
+<option>Saint-Étienne-de-Crossey, VACHONNES</option>
+<option>Saint-Étienne-de-Crossey, VILLAGE</option>
+<option>Saint-Geoire-en-Valdaine, BOULONGEAT</option>
+<option>Saint-Geoire-en-Valdaine, CHAFFARDIERE</option>
+<option>Saint-Geoire-en-Valdaine, CHAMPET</option>
+<option>Saint-Geoire-en-Valdaine, CHOCHE LE PARIS</option>
+<option>Saint-Geoire-en-Valdaine, CONSUOZ</option>
+<option>Saint-Geoire-en-Valdaine, CONSUOZ ABRIBUS</option>
+<option>Saint-Geoire-en-Valdaine, COTAGON</option>
+<option>Saint-Geoire-en-Valdaine, GENDARMERIE</option>
+<option>Saint-Geoire-en-Valdaine, HOPITAL</option>
+<option>Saint-Geoire-en-Valdaine, L'ORCIERE</option>
+<option>Saint-Geoire-en-Valdaine, LA COMBE</option>
+<option>Saint-Geoire-en-Valdaine, LA GLACIERE</option>
+<option>Saint-Geoire-en-Valdaine, LA PALE</option>
+<option>Saint-Geoire-en-Valdaine, LAMBERTIERE</option>
+<option>Saint-Geoire-en-Valdaine, LAREMBERT</option>
+<option>Saint-Geoire-en-Valdaine, LE FALQUE</option>
+<option>Saint-Geoire-en-Valdaine, LE GROSSET</option>
+<option>Saint-Geoire-en-Valdaine, LE MOLLARD</option>
+<option>Saint-Geoire-en-Valdaine, LE PLATON</option>
+<option>Saint-Geoire-en-Valdaine, LES BROSSES</option>
+<option>Saint-Geoire-en-Valdaine, LES HOPITAUX</option>
+<option>Saint-Geoire-en-Valdaine, LES PERRINS</option>
+<option>Saint-Geoire-en-Valdaine, PLAMPALAIS</option>
+<option>Saint-Jean-de-Moirans, CHARTREUX</option>
+<option>Saint-Jean-de-Moirans, COLOMB AUTOROUTE</option>
+<option>Saint-Jean-de-Moirans, COLOMBINIERE</option>
+<option>Saint-Jean-de-Moirans, GYMNASE</option>
+<option>Saint-Jean-de-Moirans, L'ARCHAT</option>
+<option>Saint-Jean-de-Moirans, LA MANCHE</option>
+<option>Saint-Jean-de-Moirans, LE SCAIX</option>
+<option>Saint-Jean-de-Moirans, LES TISSEUSES</option>
+<option>Saint-Jean-de-Moirans, MAISON POUR TOUS</option>
+<option>Saint-Jean-de-Moirans, MARCHE AUX CERISES</option>
+<option>Saint-Jean-de-Moirans, PARABOOT</option>
+<option>Saint-Jean-de-Moirans, PATINIERE</option>
+<option>Saint-Jean-de-Moirans, PLACE</option>
+<option>Saint-Jean-de-Moirans, RD1075</option>
+<option>Saint-Jean-de-Moirans, TRINCON</option>
+<option>Saint-Julien-de-Raz, CENTRE PNEUMOLOGIE</option>
+<option>Saint-Julien-de-Raz, LAC</option>
+<option>Saint-Julien-de-Raz, LE GARREL</option>
+<option>Saint-Julien-de-Raz, LE PLAN</option>
+<option>Saint-Julien-de-Raz, LE PUITS</option>
+<option>Saint-Julien-de-Raz, VILLAGE</option>
+<option>Saint-Nicolas-de-Macherin, CHATELONNIERE</option>
+<option>Saint-Nicolas-de-Macherin, HAUTEFORT</option>
+<option>Saint-Nicolas-de-Macherin, L'USINE</option>
+<option>Saint-Nicolas-de-Macherin, LE PILON</option>
+<option>Saint-Nicolas-de-Macherin, LES PRAIRIES</option>
+<option>Saint-Nicolas-de-Macherin, MACHERIN</option>
+<option>Saint-Nicolas-de-Macherin, MELISSARD</option>
+<option>Saint-Nicolas-de-Macherin, PLACE</option>
+<option>Saint-Sulpice-des-Rivoires, BOURG</option>
+<option>Saint-Sulpice-des-Rivoires, CHATEAU D'EAU</option>
+<option>Saint-Sulpice-des-Rivoires, FERME MOLLARD</option>
+<option>Saint-Sulpice-des-Rivoires, LA PLATIERE</option>
+<option>Saint-Sulpice-des-Rivoires, RIVOIRES</option>
+<option>Tullins, COLLEGE CONDORCET</option>
+<option>Tullins, CRUZILLE</option>
+<option>Tullins, ECOLE DESMOULINS</option>
+<option>Tullins, FURES</option>
+<option>Tullins, GARE SNCF</option>
+<option>Tullins, GOUY</option>
+<option>Tullins, JARDIN DES ARTS</option>
+<option>Tullins, L'ESLINARD</option>
+<option>Tullins, LE MANGUELY</option>
+<option>Tullins, LE PARADIS</option>
+<option>Tullins, LE PAVE</option>
+<option>Tullins, LE PORT</option>
+<option>Tullins, LE VERT</option>
+<option>Tullins, LES MASSONS</option>
+<option>Tullins, MICHEL PERRET</option>
+<option>Tullins, ORCEL</option>
+<option>Tullins, PETIT TIZIN</option>
+<option>Tullins, ROUTE DE GRENOBLE</option>
+<option>Tullins, ST JEAN DE CHEPY</option>
+<option>Tullins, STADE JEAN VALOIS</option>
+<option>Tullins, VERDEMONT</option>
+<option>Tullins, ZONE COMMERCIALE</option>
+<option>Velanne, CENTRE</option>
+<option>Velanne, LA SAUGE</option>
+<option>Voiron, ACACIAS</option>
+<option>Voiron, AVENUE DE PAVIOT</option>
+<option>Voiron, BALTISS</option>
+<option>Voiron, BD DU GUILLON</option>
+<option>Voiron, BELVEDERE I</option>
+<option>Voiron, BELVEDERE II</option>
+<option>Voiron, BERIDOT</option>
+<option>Voiron, BLANCHISSERIES</option>
+<option>Voiron, BRAMERET</option>
+<option>Voiron, BRUNERIE</option>
+<option>Voiron, BRUNETIERE</option>
+<option>Voiron, CENTRE SOCIAL</option>
+<option>Voiron, CES LA GARENNE</option>
+<option>Voiron, CHAMPFEUILLET</option>
+<option>Voiron, CHAMPFEUILLET ZA</option>
+<option>Voiron, CIMETIERE</option>
+<option>Voiron, CLOS BERARD</option>
+<option>Voiron, COLLEGE ST JOSEPH</option>
+<option>Voiron, CROIX MORIN</option>
+<option>Voiron, DENFERT ROCHEREAU</option>
+<option>Voiron, DOCTEUR VALOIS</option>
+<option>Voiron, ECOLE STE MARIE</option>
+<option>Voiron, EDGAR KOFLER</option>
+<option>Voiron, EDOUARD HERRIOT</option>
+<option>Voiron, EGLISE ST PIERRE</option>
+<option>Voiron, FATON</option>
+<option>Voiron, FBG SERMORENS</option>
+<option>Voiron, FERRONNIERE</option>
+<option>Voiron, FRERES TARDY</option>
+<option>Voiron, GARE NORD QUAI 01</option>
+<option>Voiron, GARE NORD QUAI 02</option>
+<option>Voiron, GARE NORD QUAI 04</option>
+<option>Voiron, GARE NORD QUAI 05</option>
+<option>Voiron, GARE NORD QUAI 03</option>
+<option>Voiron, GARE SUD QUAI 08</option>
+<option>Voiron, GARE SUD QUAI 09</option>
+<option>Voiron, GARE SUD QUAI12</option>
+<option>Voiron, GARE SUD QUAI 13</option>
+<option>Voiron, GARE SUD QUAI 14</option>
+<option>Voiron, GARE SUD QUAI 15</option>
+<option>Voiron, GARE SUD QUAI 16</option>
+<option>Voiron, GENDARMERIE</option>
+<option>Voiron, GENERAL LECLERC</option>
+<option>Voiron, GEORGE SAND</option>
+<option>Voiron, GEORGES FRIER</option>
+<option>Voiron, GRAND ANGLE</option>
+<option>Voiron, GYMNASE LA GARENNE</option>
+<option>Voiron, HORTENSIAS</option>
+<option>Voiron, IMPOTS</option>
+<option>Voiron, L AGNELAS</option>
+<option>Voiron, LAVOIR DE CRIEL</option>
+<option>Voiron, LE PARVIS</option>
+<option>Voiron, LE ROUSSET</option>
+<option>Voiron, LE ROUSSET 2</option>
+<option>Voiron, LE VERDIN</option>
+<option>Voiron, LEPRINCE RINGUET</option>
+<option>Voiron, LES ECUREUILS</option>
+<option>Voiron, LES TUILIERES</option>
+<option>Voiron, LOUIS NEEL</option>
+<option>Voiron, LYCEE MARTELLIERE</option>
+<option>Voiron, MAIRIE</option>
+<option>Voiron, MAISON BLANCHE</option>
+<option>Voiron, MAISON ROSE</option>
+<option>Voiron, MATERNITE CHIRURGIE</option>
+<option>Voiron, MEDECINE</option>
+<option>Voiron, MEDIATHEQUE</option>
+<option>Voiron, MJC</option>
+<option>Voiron, PAUL BERT</option>
+<option>Voiron, PAVIOT</option>
+<option>Voiron, PAVIOT ECOLE</option>
+<option>Voiron, POLE DE VOUISE</option>
+<option>Voiron, RUE DE CRIEL</option>
+<option>Voiron, RUE DES CASTORS</option>
+<option>Voiron, RUE DES GENTIANES</option>
+<option>Voiron, RUE DES MARMOTTES</option>
+<option>Voiron, RUE DU COLOMBIER</option>
+<option>Voiron, RUE DU FATON</option>
+<option>Voiron, RUE GUIMET</option>
+<option>Voiron, SNCF</option>
+<option>Voiron, STENDHAL</option>
+<option>Voiron, VERDUN</option>
+<option>Voiron, VICTOR HUGO</option>
+<option>Voissant, EGLISE</option>
+<option>Voissant, SOUS LE MONT</option>
+<option>Voissant, VERCHERE</option>
+<option>Voreppe, THALES TRIXELL</option>
+<option>Voreppe, ALUMINIUM</option>
+<option>Voreppe, AVENUE DU 11 NOVEMBRE</option>
+<option>Voreppe, BANNETTES</option>
+<option>Voreppe, BASCULE</option>
+<option>Voreppe, CAFE ADRAIT</option>
+<option>Voreppe, CHARMINELLES</option>
+<option>Voreppe, CHASSOLIERE</option>
+<option>Voreppe, CHEVALON</option>
+<option>Voreppe, DOCTEUR THEVENET</option>
+<option>Voreppe, ELS GROUP</option>
+<option>Voreppe, GARE SNCF</option>
+<option>Voreppe, LARCADE</option>
+<option>Voreppe, LOGIS NEUF</option>
+<option>Voreppe, LOUIS ARMAND</option>
+<option>Voreppe, MAIRIE</option>
+<option>Voreppe, MALOSSANE</option>
+<option>Voreppe, MONUMENT AUX MORTS</option>
+<option>Voreppe, POMA</option>
+<option>Voreppe, RADIALL</option>
+<option>Voreppe, SAMLLOC</option>
+<option>Voreppe, SEMINAIRE</option>
+<option>Voreppe, VOLOUISE</option>
+<option>Vourey, LAVOIR</option>
+<option>Vourey, PRESSOIR</option>
+			</datalist>
+
+			<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value);">Valider</button>
+
+		</form>
+		<a href="index.html"><button>Retour à l'index</button></a>
+	</details>
+</body>
+</html>

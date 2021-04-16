@@ -1,17 +1,17 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
-<!-- Version 0.8-->
+<!-- Version 0.9-->
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href=favicon.ico> 
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
-	<script src="js/script.js"></script>
-	<script src="js/stopsAndLines.js"></script>
+	<script src="js/script_tag.js"></script>
+	<script src="js/stopsAndLines_tag.js"></script>
 	<script>
 		function loading(){
-			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStop'));
+			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTAG'));
 			HTMLContent = "Prochains départs " + LinesAndStop.arret;
 			document.title = LinesAndStop.arret;
 			document.getElementById('main').innerHTML = HTMLContent;
@@ -130,7 +130,7 @@
 				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png" alt="TAG"></div>
 				<div class="dest-txt">Je monte, Je valide !</div>
 				<div class="time-txt"><img src="img/Cita_60px.png" alt="Citadis" /><span>
-					V0.8				
+					V0.9				
 				</span></div>
 			</div>
 		</div>

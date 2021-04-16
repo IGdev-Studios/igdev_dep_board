@@ -1,33 +1,52 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 	<!-- Version 0.8-->
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href=favicon.ico> 
-	<link rel="stylesheet" type="text/css" href="./css/style.css">
-	<title>TAG Departure board</title>
-</head>
-<body>
-	<div id="cadre" class="txtfix">
-		Bonjour. Ce projet à démaré le <b>16/03/2021</b><br>
-		Vous allez accéder à un tableau de prochains départs, à l'arrêt de votre choix sur l'ensemble du réseau <b><a class="tag" href="https://tag.fr">TAG</a></b><br>
-		Ce projet à été réalisé par Citadis, avec l'appui de Kelyaenn.
-	</div>
-	<h2>Mode d'emploi</h2>
-	<p>Seletionnez en bas de la page suivante l'arrêt et les lignes de votre choix
-	<a href="departs.html"><button>Accéder au tableau des départs</button></a></p>
-	<br>
-	<h2>Informations Complémentaires</h2>
-	<ul>
-		<li>Tous les arrêts TAG sont disponibles</li>
-		<li>Toutes les lignes Transisère, aux arrêts TAG sont</li>
-	</ul>
-	<br>
-	<h2>Crédits</h2>
-	<p>Données issues de <a href="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html">l'open data Metromobilités.</a><br></p>
-	<br>
-	<br>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="shortcut icon" href=favicon.ico> 
+		<link rel="stylesheet" type="text/css" href="./css/style.css">
+		<title>TAG Departure board</title>
+	</head>
+
+	<body>
+		<div id="cadre" class="txtfix">
+			<center>Tableau de départ des bus pour les réseaux TAG, Pays Voironnais mobilité et TouGo.</center>
+		</div>
+
+
+		<p>
+			<center>
+				<div id="resaux" class="txtfix">
+					<center> Seletionnez le réseau souhaité </center>
+		</p>
+		<a href="departs_TAG.html"><button>Réseau TAG (Grenoble)</button></a>
+		<a href="departs_TPV.html"><button>Réseau du Pays Voironnais</button></a>
+		<a href="departs_tougo.html"><button>Réseau du Grésivaudan</button></a>
+		</center>
+		</div>
+
+		<h2>Informations Complémentaires</h2>
+		<ul>
+			<li>Tous les arrêts TAG sont disponibles</li>
+			<li>Tous les arrêts des Pays Voironnais sont disponibles</li>
+			<li>Tous les arrêts du réseau TouGo sont disponible</li>
+			<li>Toutes les lignes Transisère, aux arrêts TAG, Pays Voironnais Mobilité et TouGo sont disponible</li>
+		</ul>
+		<br>
+		
+		<h2>Crédits</h2> <div id="imgIGdev"> <img src="img/IGdev.png" alt="IGdev" /></div>
+
+		<ul style="width: 1200px;height: 122px;margin-top: -100px;">
+			<li>Données issues de <a href="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html">l'open data Metromobilités.</a></li>
+			<li>Icons des lignes TAG par Citadis et Kelyaenn.</li>
+			<li>Icons des lignes du Pays Voironnais et tougo par Borisi1234.</li>
+			<li>Script par Kelyaenn</li>
+			<li>HTML5 &amp; CSS par Citadis</li>
+			<li>Correction code par Borisi1234</li>
+		</ul>
+
+
+	</body>
 </html>

@@ -39,7 +39,6 @@ V0.2
 
 V0.1
   - Concept de base créé à partir de rien (et de paint.net)
-  - 
 
 # EN. Next departures board
 Mini and simple website created to display next bus arrival on a (web) departure board.

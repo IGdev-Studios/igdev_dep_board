@@ -4,6 +4,9 @@ Actuellement, tous les arrêts TAG (Grenoble), Pays voironnais mobilité (Pays v
 
 # FR. PATCH NOTES :
 
+**RELEASE 1.0 :**
+  - Sortie officiel du site internet !
+
 V0.9
   - Ajout des tableaux d'arrivée des réseaux de bus "pays voironnais mobilité" et "tougo".
   - Changement des logo "citadis" par le logo "IGdev"
@@ -43,6 +46,10 @@ Mini and simple website created to display next bus arrival on a (web) departure
 Currently, all TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) and TouGo (Grésivaudan) stops are available and functional.
 
 # EN. PATCH NOTES :
+
+**REALEASE 1.0 : **
+
+  - The website is officially launched!
 
 V0.9
   - Adding the arrival board of the "pays voironnais mobilité" and "tougo" bus networks

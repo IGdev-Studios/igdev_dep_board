@@ -40,6 +40,7 @@ V0.1
 
 # EN. Next departures board
 Mini and simple website created to display next bus arrival on a (web) departure board.
+
 Currently, all TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) and TouGo (Grésivaudan) stops are available and functional.
 
 # EN. PATCH NOTES :

@@ -48,18 +48,26 @@ img {
 	display: flex;
 }
 .txtfix{
-	font-size: 25px;
-	display: flex;
-	margin-top: 60px;
+	font-size: 20px;
+	padding-bottom: 4px;
 }
 
 .txtfix2{
-	font-size: 15px;
+	font-family: "Fira Sans", sans-serif;
+	color: white;	
+	display: flex;
+	margin-top: 70px;
+}
+
+.txtfix3{
+	font-size: 20px;
 	padding-bottom: 4px;
 }
+
+
 #cadre {
 	height: 120% ;
-	width: 100%;
+	width: 90%;
 	border-radius: 70px;
 	background-color: #333333 ;
 	margin: 1% 3% 1% ;
@@ -124,7 +132,6 @@ details {
 	margin: 1% 3% 1%;
 	padding: 1% 2% 1% 2%;
 }
-
 #imgIGdev {
 	height: 120%;
 	display: flex;

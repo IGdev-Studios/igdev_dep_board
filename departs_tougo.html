@@ -31,9 +31,17 @@
 				if(finalSchedules.length >= 4){
 					for (let i = 0; i <= 3; i++) {
 						if(finalSchedules[i].time >= 0){
-							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
-							HTMLContent += finalSchedules[i].line;
-							HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/></div><div class="dest-txt">';
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if(linesImages.includes(finalSchedules[i].line)){
+								HTMLContent += '<img src="img/';
+								HTMLContent += finalSchedules[i].line;
+								HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/>';
+
+							}else{
+								HTMLContent+=finalSchedules[i].line;
+							}	
+							
+							HTMLContent += '</div><div class="dest-txt">';
 							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
 							if(finalSchedules[i].time == 0){
 								HTMLContent += "<1";
@@ -56,9 +64,17 @@
 				}else{
 					finalSchedules.forEach(element => {
 						if(element.time >= 0){
-							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
-							HTMLContent += element.line;
-							HTMLContent += '_600px.png" alt="'+ element.line + '"/></div><div class="dest-txt">';
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if(linesImages.includes(element.line)){
+								HTMLContent += '<img src="img/';
+								HTMLContent += element.line;
+								HTMLContent += '_600px.png" alt="'+ element.line + '"/>';
+
+							}else{
+								HTMLContent+=element.line;
+							}	
+							
+							HTMLContent += '</div><div class="dest-txt">';
 							HTMLContent += element.lastStop + '</div><div class="time-txt">';
 							if(element.time == 0){
 								HTMLContent += "<1";

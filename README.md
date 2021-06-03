@@ -5,6 +5,7 @@ Actuellement, tous les arrêts TAG (Grenoble), Pays voironnais mobilité (Pays v
 # FR. PATCH NOTES :
 V1
   - Possibilité de choisir le nombre de lignes à afficher
+  - La ligne clignote lorsque le bus arrive dans <1min
 
 V0.9
   - Ajout des tableaux d'arrivée des réseaux de bus "pays voironnais mobilité" et "tougo".

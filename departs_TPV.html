@@ -11,12 +11,14 @@
 	<script src="js/stopsAndLines_tpv.js"></script>
 	<script>
 		function loading(){
+			let numberRows = localStorage.getItem('numberRows');
 			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTPV'));
 			HTMLContent = "Prochains départs " + LinesAndStop.arret;
 			document.title = LinesAndStop.arret;
 			document.getElementById('main').innerHTML = HTMLContent;
 			document.getElementById('arretForm').value = LinesAndStop.arret;
 			document.getElementById('lignesForm').value = LinesAndStop.lines;
+			document.getElementById('numberRowsForm').value = numberRows;
 		}
 		async function refresh(){
 			let schedules = await getSchedules();
@@ -28,12 +30,24 @@
 
 				HTMLContent = "";
 				
-				if(finalSchedules.length >= 4){
-					for (let i = 0; i <= 3; i++) {
+				let numberRows = localStorage.getItem('numberRows');
+				if(finalSchedules.length >= numberRows){
+					for (let i = 0; i <= numberRows-1; i++) {
 						if(finalSchedules[i].time >= 0){
-							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/';
-							HTMLContent += finalSchedules[i].line;
-							HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/></div><div class="dest-txt">';
+							if(finalSchedules[i].time == 0){
+								HTMLContent += '<div class="blink_me">';
+								}
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if(linesImages.includes(finalSchedules[i].line)){
+								HTMLContent += '<img src="img/';
+								HTMLContent += finalSchedules[i].line;
+								HTMLContent += '_600px.png" alt="'+ finalSchedules[i].line + '"/>';
+
+							}else{
+								HTMLContent+=finalSchedules[i].line;
+							}	
+							
+							HTMLContent += '</div><div class="dest-txt">';
 							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
 							if(finalSchedules[i].time == 0){
 								HTMLContent += "<1";
@@ -48,6 +62,9 @@
 							if(finalSchedules[i].realtime != true){
 								HTMLContent += "*";
 							}
+							if(finalSchedules[i].time == 0){
+								HTMLContent += '</div>';
+								}
 							HTMLContent += "</div>";
 							HTMLContent += "</div>";
 							HTMLContent += '<div class="lignegrise"></div>';
@@ -56,9 +73,20 @@
 				}else{
 					finalSchedules.forEach(element => {
 						if(element.time >= 0){
-							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img"><img src="img/'
-							HTMLContent += element.line;
-							HTMLContent += '_600px.png" alt="'+ element.line + '"/></div><div class="dest-txt">';
+							if(element.time == 0){
+								HTMLContent += '<div class="blink_me">';
+								}
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if(linesImages.includes(element.line)){
+								HTMLContent += '<img src="img/';
+								HTMLContent += element.line;
+								HTMLContent += '_600px.png" alt="'+ element.line + '"/>';
+
+							}else{
+								HTMLContent+=element.line;
+							}	
+							
+							HTMLContent += '</div><div class="dest-txt">';
 							HTMLContent += element.lastStop + '</div><div class="time-txt">';
 							if(element.time == 0){
 								HTMLContent += "<1";
@@ -73,6 +101,9 @@
 							if(element.realtime != true){
 								HTMLContent += "*";
 							}
+							if(element.time == 0){
+								HTMLContent += '<div class="blink_me">';
+								}
 							HTMLContent += "</div>";
 							HTMLContent += "</div>";
 							HTMLContent += '<div class="lignegrise"></div>';
@@ -130,7 +161,7 @@
 				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/4a/Logo_Pays_Voironnais_Mobilit%C3%A9.svg/1024px-Logo_Pays_Voironnais_Mobilit%C3%A9.svg.png" alt="TAG"></div>
 				<div class="dest-txt">Prenez de l'avance</div>
 				<div class="time-txt"><img src="img/IGdev.png" alt="IGdev" /><span>
-					V1.0		
+					V1			
 				</span></div>
 			</div>
 		</div>
@@ -150,6 +181,8 @@
 			<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;"><br>
 			<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
 			<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;"><br>
+			<label for="numberRowsForm">Nombre de lignes à afficher</label>
+			<input id="numberRowsForm" type="number" name="numberRowsForm" placeholder="Nombre de lignes à afficher" style="width: 20%;"><br>
 			<datalist id="lignesForm-list">
 				<option>1</option>
 				<option>2</option>
@@ -615,7 +648,7 @@
 <option>Vourey, PRESSOIR</option>
 			</datalist>
 
-			<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value);">Valider</button>
+			<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
 
 		</form>
 		<a href="index.html"><button>Retour à l'index</button></a>

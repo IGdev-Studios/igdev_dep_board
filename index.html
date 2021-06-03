@@ -8,9 +8,16 @@
 		<link rel="shortcut icon" href=favicon.ico> 
 		<link rel="stylesheet" type="text/css" href="./css/style.css">
 		<title>TAG Departure board</title>
+		<script>
+			function onload(){
+				conscole.log(screen.availWidth);
+				console.log(screen.width)
+			}
+
+		</script>
 	</head>
 
-	<body>
+	<body onload="onload()">
 		<div id="cadre" class="txtfix">
 			<center>Tableau de départ des bus pour les réseaux TAG, Pays Voironnais mobilité et TouGo.</center>
 		</div>
@@ -24,7 +31,6 @@
 		<a href="departs_TAG.html"><button>Réseau TAG (Grenoble)</button></a>
 		<a href="departs_TPV.html"><button>Réseau du Pays Voironnais</button></a>
 		<a href="departs_tougo.html"><button>Réseau du Grésivaudan</button></a>
-		<a href="index_mobile.html"><button>Accéder à la version mobile</button></a>
 		</center>
 		</div>
 

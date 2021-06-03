@@ -108,3 +108,13 @@ details {
 	display: flex;
 	margin-bottom: 150px
 }
+
+.blink_me {
+	animation: blinker 2s linear infinite;
+  }
+  
+  @keyframes blinker {
+	50% {
+	  opacity: 0;
+	}
+  }

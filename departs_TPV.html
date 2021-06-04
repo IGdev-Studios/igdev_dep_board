@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="fr">
-<!-- Version 0.9-->
+<!-- Version 1-->
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,9 +34,6 @@
 				if(finalSchedules.length >= numberRows){
 					for (let i = 0; i <= numberRows-1; i++) {
 						if(finalSchedules[i].time >= 0){
-							if(finalSchedules[i].time == 0){
-								HTMLContent += '<div class="blink_me">';
-								}
 							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
 							if(linesImages.includes(finalSchedules[i].line)){
 								HTMLContent += '<img src="img/';
@@ -50,8 +47,10 @@
 							HTMLContent += '</div><div class="dest-txt">';
 							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
 							if(finalSchedules[i].time == 0){
+								HTMLContent += '<div class="blink_me">';
 								HTMLContent += "<1";
 								HTMLContent += "min";
+								HTMLContent += '</div>';
 							}else if(finalSchedules[i].time >= 60){
 								HTMLContent += minutesToHours(finalSchedules[i].time);
 
@@ -62,9 +61,6 @@
 							if(finalSchedules[i].realtime != true){
 								HTMLContent += "*";
 							}
-							if(finalSchedules[i].time == 0){
-								HTMLContent += '</div>';
-								}
 							HTMLContent += "</div>";
 							HTMLContent += "</div>";
 							HTMLContent += '<div class="lignegrise"></div>';

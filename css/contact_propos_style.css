@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Oxanium&family=Oxygen&display=swap');
+
+body
+{
+    background-color: white;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Fira Sans", sans-serif;
+}
+
+nav ul{
+    list-style-type: none;
+}
+
+nav li{
+    float: left;
+    width: 25%;
+    text-align: center;
+
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav{
+width: 100%;
+margin: 0 auto;
+background-color: rgb(53, 55, 56);
+position: sticky;
+top: 0px;
+
+}
+
+nav a{
+    display: block;
+    text-decoration: none;
+    color: white;
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
+}
+
+nav a:hover{
+color: rgb(255, 216, 0);
+border-bottom: 2px solid gold;
+
+}
+
+#barre1 {
+    background-color: rgb(255, 216, 0);
+    display: flex;
+    width: 100%;
+    min-height: 10vh;
+}
+
+#barre2 {
+    background-color: rgb(53, 55, 56);
+    display: flex;
+    width: 100%;
+    min-height: 5vh;
+}
+
+#button {
+	height: 75px;
+    display: flex;
+    position: relative;
+    bottom: 125px;
+    left: 10px;
+}
+
+
+

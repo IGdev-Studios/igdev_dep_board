@@ -163,6 +163,7 @@ summary {
 	max-width: 100%;
 	flex-basis: auto;
 	flex-grow: 1;
+	flex: 1;
 	display: flex;
 	flex-direction: column;
 }

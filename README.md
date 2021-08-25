@@ -3,9 +3,9 @@ Mini-site simple créé pour afficher l'arrivée du prochain bus sur un tableau 
 Actuellement, tous les arrêts TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) et TouGo (Grésivaudan) sont disponibles et fonctionnels.
 
 # FR. PATCH NOTES :
-
-**RELEASE 1.0 :**
-  - Sortie officiel du site internet !
+V1
+  - Possibilité de choisir le nombre de lignes à afficher
+  - La ligne clignote lorsque le bus arrive dans <1min
 
 V0.9
   - Ajout des tableaux d'arrivée des réseaux de bus "pays voironnais mobilité" et "tougo".
@@ -39,16 +39,14 @@ V0.2
 
 V0.1
   - Concept de base créé à partir de rien (et de paint.net)
+  - 
 
 # EN. Next departures board
 Mini and simple website created to display next bus arrival on a (web) departure board.
+
 Currently, all TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) and TouGo (Grésivaudan) stops are available and functional.
 
 # EN. PATCH NOTES :
-
-**REALEASE 1.0 : **
-
-  - The website is officially launched!
 
 V0.9
   - Adding the arrival board of the "pays voironnais mobilité" and "tougo" bus networks

@@ -173,12 +173,20 @@
 	<details>
 		<summary>Afficher plus</summary>
 		<form>
-			<label for="arretForm"> Arrêt : (utilisez l'autocomplétion) </label>
-			<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" list="arretForm-list" style="width:20%;"><br>
-			<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
-			<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" list="lignesForm-list" style="width:20%;"><br>
-			<label for="numberRowsForm">Nombre de lignes à afficher</label>
-			<input id="numberRowsForm" type="number" name="numberRowsForm" placeholder="Nombre de lignes à afficher" style="width: 20%;"><br>
+			<div class="bottom_form">
+			<div class="bottom_field">
+			<label for="arretForm"> <br>Arrêt : (utilisez l'autocomplétion) </label>
+			<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt"  class="arretForm" list="arretForm-list">
+			<!-- <input list="list-cities" type="text" name="arretForm" class="arretForm" placeholder="Arrêt"> -->
+			</div>
+			<div class="bottom_field">
+			<label for="lignesForm"> <br>Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
+			<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" class="arretForm" list="lignesForm-list" >
+			</div>
+			<div class="bottom_field">
+			<label for="numberRowsForm"><br>Nombre de lignes à afficher</label>
+			<input id="numberRowsForm" type="number" name="numberRowsForm" placeholder="Nombre de lignes à afficher" class="arretForm"><br>
+		</div>
 			<datalist id="lignesForm-list">
 				<option>1</option>
 				<option>2</option>
@@ -643,11 +651,14 @@
 <option>Vourey, LAVOIR</option>
 <option>Vourey, PRESSOIR</option>
 			</datalist>
-
-			<button type="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
+			</div>
+			<button type="button" class="button" onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
 
 		</form>
-		<a href="index.html"><button>Retour à l'index</button></a>
+		
 	</details>
+	<div class="button_bottom">
+		<a href="index.html"><button class="button"><- Retour à l'index</button></a>
+		</div>
 </body>
 </html>

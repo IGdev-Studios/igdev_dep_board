@@ -103,9 +103,13 @@ function checkSaved(){
     }
     localStorage.setItem('LinesAndStopTPV',JSON.stringify(LinesAndStop));
    }
+   if(localStorage.getItem('numberRows') == null){
+    let numberRows = 4
+    localStorage.setItem('numberRows',numberRows);
+}
 }
 
-function editLinesAndStop(stop,lines){
+function editLinesAndStop(stop,lines,numberRows){
     
  
         var i = 0;
@@ -124,6 +128,7 @@ function editLinesAndStop(stop,lines){
             "lines":lines
         }
         localStorage.setItem('LinesAndStopTPV',JSON.stringify(LinesAndStop));
+        localStorage.setItem('numberRows',numberRows);
         loading();
         refresh();
     

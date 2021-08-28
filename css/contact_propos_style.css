@@ -43,6 +43,7 @@ nav a{
     color: white;
     border-bottom: 2px solid transparent;
     padding: 10px 0px;
+    font-family: "Fira Sans", sans-serif;
 }
 
 nav a:hover{

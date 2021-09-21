@@ -1,6 +1,9 @@
 async function getSchedules(){
-    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopGSV'));
-    let timesMontfleury =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/"+ LinesAndStop.zone +"/stoptimes");
+    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTAG'));
+    try{
+        let response =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/"+ LinesAndStop.zone +"/stoptimes");
+        const timesMontfleury = await response.json();
+
     var finalSchedules = [];
     timesMontfleury.forEach(element => {
         var id = element.pattern.id.split(":");
@@ -32,15 +35,23 @@ async function getSchedules(){
         return finalSchedules;
     }
    
+    }catch{
+        return "Erreur chargement";
+    }
+
 };
 
 async function fetchApi(url){
+    const controller = new AbortController()
+    const timeoutId = setTimeout(() => controller.abort(), 5000)
     const response = await fetch(url,{
         headers:{
             "origin":"webBrowser"
-        }
+        },
+        signal: controller.signal
     });
-    return response.json()
+    clearTimeout(id);
+    return response
 }
 
 function secToDelay(time){

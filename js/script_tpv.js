@@ -50,7 +50,7 @@ async function fetchApi(url){
         },
         signal: controller.signal
     });
-    clearTimeout(id);
+    clearTimeout(timeoutId);
     return response
 }
 

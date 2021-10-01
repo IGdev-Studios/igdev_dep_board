@@ -83,7 +83,7 @@ nav > ul li:hover .sous{
     background-color: rgb(255, 216, 0);
     display: flex;
     width: 100%;
-    min-height: 10vh;
+    min-height: 17vh;
 }
 
 #barre2 {
@@ -103,4 +103,14 @@ nav > ul li:hover .sous{
 
 #illu {
     width: 20%;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: rgb(255, 216, 0);
+    color: rgb(0, 0, 0);
+    position: fixed;
+    bottom: 1px;
 }

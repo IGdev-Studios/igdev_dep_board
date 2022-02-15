@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Oxanium&family=Oxygen&display=swap');
 
+
 *{
     margin: 0px;
     padding: 0px;
@@ -71,6 +72,7 @@ nav > ul li:hover .sous{
 .deroulant > a::after{
     content:" ▼";
     font-size: 12px;
+    text-align: center;
 }
 
 .conteneur{
@@ -81,29 +83,28 @@ nav > ul li:hover .sous{
 
 #barre1 {
     background-color: rgb(255, 216, 0);
-    display: flex;
+    /*display: flex;*/
     width: 100%;
-    min-height: 17vh;
+    min-height: 10vh;
 }
 
 #barre2 {
     background-color: rgb(53, 55, 56);
     display: flex;
     width: 100%;
-    min-height: 5vh;
+    height: auto;
+    min-height: 10vh;
 }
 
 #button {
-	height: 75px;
+    height: 9vh;
     display: flex;
     position: relative;
-    bottom: 125px;
-    left: 10px;
+    /*bottom: 125px;
+    left: 10px;*/
+    margin-left: 5%;
 }
 
-#illu {
-    width: 20%;
-}
 
 footer {
     display: flex;
@@ -113,4 +114,24 @@ footer {
     color: rgb(0, 0, 0);
     position: fixed;
     bottom: 1px;
+}
+
+.news{
+    background-color: lightgrey;
+    max-width: 47%;
+    min-height: 40vh;
+    max-height: 50vh;
+    border-radius: 15px;
+    margin-left: 3%;
+    text-align: center;
+}
+
+.news2{
+    margin-left: 5%;
+    margin-right: 5%;
+    color: rgb(0, 0, 0);
+}
+
+.img-news{
+    width: 100%;
 }

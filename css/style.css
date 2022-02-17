@@ -5,7 +5,7 @@ body {
 	margin: 0;
 }
 img {
-	height: 100px;
+	height: 13vw;
 }
 .main-grid {
 	display: grid;
@@ -18,7 +18,7 @@ img {
 }
 .main, .dest-txt, .time-txt{
 	font-family: "Fira Sans", sans-serif;
-	font-size: 70px;
+	font-size: 5vw;
 }
 .heure{
 	padding: 0 10px ;
@@ -27,17 +27,17 @@ img {
 	color: #333333;
 	justify-self: center;
 	align-self: center;
-	font-size: 70px;
+	font-size: 5vw;
 	font-family: "Oxanium", cursive;
 }
 .txtfix{
-	font-size: 40px;
+	font-size: 4vw;
 	padding-bottom: 4px;
 }
 #cadre {
 	height: 110% ;
-	width: 90%;
-	border-radius: 70px;
+	width: 90vw;
+	border-radius: 5vw;
 	background-color: #333333 ;
 	margin: 1% 3% 1% ;
 	padding: 1% 2% 1% 2%;
@@ -45,7 +45,7 @@ img {
 .colfix {
 	display: grid;
 	grid-template-columns: 2fr 8fr 2fr ;
-	gap: 20px;
+	gap: 15px;
 }
 .ligneblanche {
 	height: 10px;
@@ -56,15 +56,16 @@ img {
 	background-color: lightgray; 
 }
 #surcadre {
-	min-height: 700px;
-	border-radius: 30px;
+	min-height: 65vh;
+	max-height: auto;
+	border-radius: 3vw;
 	background-color: white ;
 }
 .ligne-img{
 	display: flex;
 	justify-self: center;
 	align-self: center;
-	font-size: 70px;
+	font-size: 5vw;
 }
 .dest-ligne{
 	display: grid;

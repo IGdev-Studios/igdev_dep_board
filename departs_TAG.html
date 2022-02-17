@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fr">
 <!-- Version 1-->
 <head>
@@ -24,9 +24,6 @@
 			let schedules = await getSchedules();
 			if(schedules == "Aucun passage de prévu"){
 				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
-				document.getElementById('passages').innerHTML = HTMLContent;
-			}else if (schedules == "Erreur chargement"){
-				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Erreur connexion au serveur</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
 				document.getElementById('passages').innerHTML = HTMLContent;
 			}else{
 				let finalSchedules = sort(schedules);
@@ -158,8 +155,8 @@
 			<div class="colfix dest-ligne">
 				<div class="ligne-img"><img src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png" alt="TAG"></div>
 				<div class="dest-txt">Je monte, Je valide !</div>
-				<div class="time-txt"><img src="img/Cita_60px.png" alt="Citadis" /><span>
-					V1				
+				<div class="time-txt"><img src="img/IGdev.png" alt="Citadis" /><span>
+								
 				</span></div>
 			</div>
 		</div>
@@ -240,6 +237,10 @@
 				<option>68</option>
 				<option>70</option>
 				<option>71</option>
+				<option>X01</option>
+				<option>X02</option>
+				<option>X03</option>
+				<option>X08</option>
 			</datalist>
 
 			<datalist id="arretForm-list">
@@ -980,7 +981,7 @@
 	</form>
 	</details>
 	<div class="button_bottom">
-	<a href="index.html" ><button class="button"> <- Retour à l'index</button></a>
+	<a href="accueil.html" ><button class="button"> <- Retour à l'index</button></a>
 	</div>
 </body>
 </html>

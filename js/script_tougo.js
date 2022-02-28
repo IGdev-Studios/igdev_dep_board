@@ -1,5 +1,5 @@
 async function getSchedules(){
-    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTAG'));
+    let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopGSV'));
     try{
         let response =  await fetchApi("https://data.metromobilite.fr/api/routers/default/index/clusters/"+ LinesAndStop.zone +"/stoptimes");
         const timesMontfleury = await response.json();

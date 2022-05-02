@@ -10,7 +10,7 @@ async function getSchedules(){
         if(!LinesAndStop.lines){
             element.times.forEach(time => {
                 finalSchedules.push({
-                    "lastStop":element.pattern.lastStopName,
+                    "lastStop":element.pattern.shortDesc,
                     "time":time.realtimeArrival,
                     "realtime":time.realtime,
                     "line":id[1]
@@ -20,7 +20,7 @@ async function getSchedules(){
         if(LinesAndStop.lines.includes(id[1])){
             element.times.forEach(time => {
                 finalSchedules.push({
-                    "lastStop":element.pattern.lastStopName,
+                    "lastStop":element.pattern.shortDesc,
                     "time":time.realtimeArrival,
                     "realtime":time.realtime,
                     "line":id[1]

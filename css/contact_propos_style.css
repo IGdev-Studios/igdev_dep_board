@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Oxanium&family=Oxygen&display=swap');
+
+body
+{
+    background-color: white;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Fira Sans", sans-serif;
+}
+
+nav{
+    width: 100%;
+    margin: 0 auto;
+    background-color: rgb(53, 55, 56);;
+    position: sticky;
+    top: 0px;
+}
+
+nav ul{
+    list-style-type: none;
+}
+
+nav ul li{
+    float: left;
+    width: 25%;
+    text-align: center;
+    position: relative;
+}
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
+nav a{
+    display: block;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
+}
+
+nav a:hover{
+    color: orange;
+    border-bottom: 2px solid gold;
+}
+
+.sous{
+    display: none;
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: rgb(53, 55, 56);
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+nav > ul li:hover .sous{
+    display: block;
+}
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+.sous a{
+    padding: 10px;
+    border-bottom: none;
+}
+.sous a:hover{
+    border-bottom: none;
+    background-color: RGBa(200,200,200,0.1);
+}
+.deroulant > a::after{
+    content:" ▼";
+    font-size: 12px;
+    text-align: center;
+}
+
+.conteneur{
+  margin: 50px 20px;
+  height: 1500px;
+
+}
+
+#barre1 {
+    background-color: rgb(255, 216, 0);
+    /*display: flex;*/
+    width: 100%;
+    min-height: 10vh;
+}
+
+#barre2 {
+    background-color: rgb(53, 55, 56);
+    display: flex;
+    width: 100%;
+    height: auto;
+    min-height: 10vh;
+}
+
+#button {
+    height: 9vh;
+    display: flex;
+    position: relative;
+    /*bottom: 125px;
+    left: 10px;*/
+    margin-left: 5%;
+}
+
+
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    background-color: rgb(255, 216, 0);
+    color: rgb(0, 0, 0);
+    position: fixed;
+    bottom: 1px;
+}
+
+.texte{
+    margin-left: 2%;
+
+}
+
+#Cita{
+    color: #FFD800;
+}
+
+

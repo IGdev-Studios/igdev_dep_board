@@ -1,7 +1,7 @@
-async function getNetworkName(){
+async function getNetworkName() {
     const urlParams = new URLSearchParams(window.location.search);
-			const networkSelected = urlParams.get('network');
-            return networkSelected;
+    const networkSelected = urlParams.get('network');
+    return networkSelected;
 }
 
 async function getSchedules() {
@@ -159,17 +159,7 @@ function minutesToHours(minutes) {
 
 
 async function loadStopAndLines() {
-    let mainText = ""
-    const reponse = await fetch('js/stopsTag.txt').then((data) => {
-        data.text().then((text) => {
-            mainText = text;
-        }).catch((error) => {
-            console.log(error);
-            mainText = "error";
-        });
-    }).catch((error) => {
-        console.log(error);
-        mainText = "error";
-    });
-    return mainText;
+    const response = await fetch('js/stopsTag.txt')
+    const data = await response.text();
+    return data;
 }

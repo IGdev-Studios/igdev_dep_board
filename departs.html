@@ -8,36 +8,50 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href=favicon.ico>
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
-	<script src="js/script_tag.js"></script>
-	<script src="js/stopsAndLines_tag.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/stopsAndLines.js"></script>
 	<script src="js/networks.js"></script>
 	<script>
 		async function loading() {
 			let networkSelected = await getNetworkName();
+			console.log(networkSelected);
 			let stopsData = await loadStopAndLines(networkSelected).then((data) => {
 				if (data == "error") {
 					//handle error
 				}
 				else {
-					console.log(data);
 					document.getElementById('stopsData').innerHTML = data;
 				}
 
 				let numberRows = localStorage.getItem('numberRows');
-			let LinesAndStop = JSON.parse(localStorage.getItem('LinesAndStopTAG'));
-			HTMLContent = "Prochains départs " + LinesAndStop.arret;
-			document.title = LinesAndStop.arret;
-			document.getElementById('main').innerHTML = HTMLContent;
-			document.getElementById('arretForm').value = LinesAndStop.arret;
-			document.getElementById('lignesForm').value = LinesAndStop.lines;
-			document.getElementById('numberRowsForm').value = numberRows;
-			document.getElementById('loading').classList.add('loaded');
-			const networkData = getNetwork("tag");
-			console.log(networkData);
-			document.getElementById('slogan').innerHTML = networkData.slogan;
-			document.getElementById('rightIcon').src = networkData.rightIcon;
-			document.getElementById('rightIconText').innerHTML = networkData.rightIconText;
-			document.getElementById('networkImage').src = networkData.image;
+				let itemToLoad = "";
+				switch (networkSelected) {
+					case 'tag':
+						itemToLoad = "LinesAndStopTAG";
+						break;
+					case 'tpv':
+						itemToLoad = "LinesAndStopTPV";
+						break;
+					case 'tougo':
+						itemToLoad = "LinesAndStopGSV";
+						break;
+					default:
+						itemToLoad = "LinesAndStopTAG";
+						break;
+				}
+				let LinesAndStop = JSON.parse(localStorage.getItem(itemToLoad));
+				HTMLContent = "Prochains départs " + LinesAndStop.arret;
+				document.title = LinesAndStop.arret;
+				document.getElementById('main').innerHTML = HTMLContent;
+				document.getElementById('arretForm').value = LinesAndStop.arret;
+				document.getElementById('lignesForm').value = LinesAndStop.lines;
+				document.getElementById('numberRowsForm').value = numberRows;
+				document.getElementById('loading').classList.add('loaded');
+				const networkData = getNetwork(networkSelected);
+				document.getElementById('slogan').innerHTML = networkData.slogan;
+				document.getElementById('rightIcon').src = networkData.rightIcon;
+				document.getElementById('rightIconText').innerHTML = networkData.rightIconText;
+				document.getElementById('networkImage').src = networkData.image;
 
 			}).catch((error) => {
 				console.log(error);
@@ -208,11 +222,12 @@
 				<div class="lignegrise"></div>
 			</div>
 			<div class="colfix dest-ligne">
-				<div class="ligne-img"><img
-				id="networkImage"
+				<div class="ligne-img"><img id="networkImage"
 						src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png"
 						alt="TAG"></div>
-				<div class="dest-txt"><div id="slogan"></div></div>
+				<div class="dest-txt">
+					<div id="slogan"></div>
+				</div>
 				<div class="time-txt"><img id="rightIcon" src="" alt="Citadis" /><span>
 						<div id="rightIconText"></div>
 					</span></div>

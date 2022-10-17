@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Oxanium&family=Oxygen&display=swap');
+@font-face {
+    font-family: "Signus Round";
+    src: url("/css/SignusDigitalRoundNbp-A61D.ttf");
+}
+:root {
+    --main-color: #E61A7F;
+    
+}
+*{
+    margin: 0;
+    font-family: "Oxygen";
+}
+#popup {
+    display: hidden;
+}
+/* Général */
+#siel{
+    display: grid;
+    grid-template-columns: 50vw 25vw 25vw;
+    grid-template-rows: 40vh 25vh 25vh 10vh;
+
+}
+/* Case Ligne */
+#ligne img {
+    width: auto; 
+    height: 80%;
+    object-fit: contain;
+    margin-left: 15%;
+    margin-top: 1%;
+}
+/* Case Heure + txt dest */
+#heure {
+    grid-column:2 / 4;
+}
+/* Cases Destinations */
+.dest{
+    font-weight: bold;
+    font-size: 4vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Temps d'attente */
+.temps{
+    font-family: "Signus Round";
+    font-weight: bold;
+    font-size: 9vw;
+    color: yellow;
+    background-color: black;
+    margin: 3vw 3vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Barre du bas */
+#bottomBar {
+    grid-column: 1/3;
+    background-color: var(--main-color);
+    width: 100%;
+    height: 100%;
+}
+#logo img{
+    width: auto; 
+    height: 90%;
+    margin-left: 15%;
+    margin-top: 1%;
+}

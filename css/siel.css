@@ -5,11 +5,13 @@
 }
 :root {
     --main-color: #E61A7F;
+    --tag-color: #0091D1;
     
 }
 *{
     margin: 0;
-    font-family: "Oxygen";
+    /* font-family: "Oxygen"; */
+    font-family: "Fira Sans";
 }
 #popup {
     display: hidden;
@@ -22,19 +24,67 @@
 
 }
 /* Case Ligne */
-#ligne img {
-    width: auto; 
-    height: 80%;
+#info{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 2fr;
+    grid-template-areas: "a a"
+                         "b c" ;
+    /* font-size: 6vw; */
     object-fit: contain;
-    margin-left: 15%;
-    margin-top: 1%;
+}
+#arret{
+    grid-area: a;
+    background-color: var(--tag-color);
+    font-size: 5vw;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#modal{
+    font-size: 5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#ligne {
+    width: 50%; 
+    /* height: 80%; */
+    object-fit: contain;
+    
 }
 /* Case Heure + txt dest */
-#heure {
+#divers {
     grid-column:2 / 4;
+    display: grid;
+    grid-template-areas: "a a"
+                         "b c" ;
+    }
+#heure {
+    grid-area: a;          
+    margin: 5% 25% 15% 45%;
+    font-family: "Signus Round";
+    font-weight: bold;
+    font-size: 6vw;
+    color: yellow;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.passtxt{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    font-size: 3vw;
 }
 /* Cases Destinations */
+.vers{
+    font-size: 2vw;
+}
 .dest{
+    font-family: "Oxanium";
     font-weight: bold;
     font-size: 4vw;
     display: flex;

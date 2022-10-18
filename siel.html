@@ -11,20 +11,35 @@
 </head>
 <!-- Par défaut : Tram C à Foch ferié
 HEX: #E61A7F -->
+<!-- Page web d'aide au fonctionnement du siel
+https://fr-academic.com/dic.nsf/frwiki/1476836
+ -->
 <body>
     <div id="popup">
 
     </div>
 
     <div id="siel">
-        <div id="ligne">
-        <img src="./img/C_600px.png" alt="Tram C">
+        <div id="info">
+            <div id="arret">Arrêt : Foch - Ferié</div>
+            <div id="modal">Ligne</div>
+            <img id="ligne" src="./img/C_600px.png" alt="Tram C">
         </div>
-        <div id="heure"><!--ALT+255--> </div>
-        <div id="dest1" class="dest">Condillac Universités</div>
+        <div id="divers">
+            <div id="heure">14:18</div>
+            <div class="passtxt">1er passage</div>
+            <div class="passtxt">2nd passage</div>
+        </div>
+        <div id="dest1" >
+            <div class="vers">→ vers</div>
+            <div class="dest">Condillac Universités</div>
+        </div>
         <div id="t1d1" class="temps">01</div>
         <div id="t2d1" class="temps">..</div>
-        <div id="dest2" class="dest">GIÈRES Plaine des Sports</div>
+        <div id="dest2" >
+            <div class="vers">→ vers</div>
+            <div class="dest">Plaine des Sports</div>
+        </div>
         <div id="t1d2" class="temps">--</div>
         <div id="t2d2" class="temps">++
         </div>

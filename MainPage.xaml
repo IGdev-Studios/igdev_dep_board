@@ -1,41 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Igdev_dep_board.MainPage">
-
+             x:Class="Igdev_dep_board.MainPage"
+             BackgroundColor="White">
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
+        <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource MainColor}" Padding="50">
+                <Label Text="Tabeleau des départs TAG, Pays Voironnais mobilité et TouGo" FontAttributes="Bold" FontSize="64" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
+                <FlexLayout Direction="Row" Wrap="Wrap" HorizontalOptions="Center">
+                    <Button Text="RÉSEAU TAG"/>
+                    <Button Text="RÉSEAU PAYS VOIRONNAIS"/>
+                    <Button Text="RÉSEAU DU GRÉSIVAUDAN"/>
+                </FlexLayout>
+            </StackLayout>
+            <FlexLayout Direction="Row" Wrap="Wrap" Margin="20" JustifyContent="SpaceBetween">
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="4,4"
+                                Opacity="0.4"/>
+                    </Border.Shadow>
+                    <StackLayout Orientation="Vertical" Padding="20">
+                        <Label Text="Informations Complémentaires" FontAttributes="Bold" HorizontalOptions="Start" Padding="2"/>
+                        <Label Text="- Tous les arrêts TAG sont disponibles." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Tous les arrêts des Pays Voironnais sont disponibles." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Tous les arrêts du réseau TouGo sont disponible." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Toutes les lignes Transisère, aux arrêts TAG, Pays Voironnais Mobilité et TouGo sont disponible." Margin="20, 0, 0, 0" Padding="2"/>
+                    </StackLayout>
+                </Border>
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1">
+                    <Border.Shadow>
+                        <Shadow Brush="Black"
+                                Offset="4,4"
+                                Opacity="0.4"/>
+                    </Border.Shadow>
+                    <StackLayout Orientation="Vertical" Padding="20" >
+                        <Label Text="Crédits" FontAttributes="Bold" HorizontalOptions="Start" Padding="2"/>
+                        <Label Text="- Données issues de l'open data Metromobilités." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Icones des lignes TAG par Citadis et Kelyaenn." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Icones des lignes du Pays Voironnais et tougo par Borisi1234." Margin="20, 0, 0, 0" Padding="2"/>
+                        <Label Text="- Script originel par Kelyaenn" Margin="20, 0, 0, 0" Padding="2"/>
+                    </StackLayout>
+                </Border>
+            </FlexLayout>
+        </StackLayout>
     </ScrollView>
-
 </ContentPage>

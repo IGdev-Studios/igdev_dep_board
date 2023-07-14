@@ -6,4 +6,9 @@ public partial class AppShell : Shell
 	{
 		InitializeComponent();
 	}
+
+	private async void GotoHome(object sender, EventArgs e)
+	{
+		await Navigation.PopToRootAsync();
+	}
 }

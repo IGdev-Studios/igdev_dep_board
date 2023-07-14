@@ -4,11 +4,25 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Igdev_dep_board"
-    Shell.FlyoutBehavior="Disabled">
-
+    FlyoutBehavior="Disabled"
+    FlyoutHeaderBehavior="Fixed"
+    BackgroundColor="White"
+    >
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal" Padding="10">
+            <Label Text="IGdev Departure Board" FontSize="Medium" FontAttributes="Bold" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="GotoHome"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <!--<Label Text="Open Data" FontSize="Medium" HorizontalOptions="EndAndExpand" />-->
+            <local:HyperlinkLabel Text="Open Data" FontSize="Micro" FontFamily="FiraSans-SemiBold" HorizontalOptions="EndAndExpand" Url="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html" VerticalOptions="Center"/>
+        </StackLayout>
+    </Shell.TitleView>
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+
 
 </Shell>

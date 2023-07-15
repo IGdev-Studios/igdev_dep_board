@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Igdev_dep_board"
+    xmlns:components="clr-namespace:Igdev_dep_board.Resources.Components"
     FlyoutBehavior="Disabled"
     FlyoutHeaderBehavior="Fixed"
     BackgroundColor="White"
@@ -16,13 +17,19 @@
                 </Label.GestureRecognizers>
             </Label>
             <!--<Label Text="Open Data" FontSize="Medium" HorizontalOptions="EndAndExpand" />-->
-            <local:HyperlinkLabel Text="Open Data" FontSize="Micro" FontFamily="FiraSans-SemiBold" HorizontalOptions="EndAndExpand" Url="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html" VerticalOptions="Center"/>
+            <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+                <components:HyperLink Text="Open Data" Url="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html" />
+                <components:HyperLink Text="Github" Url="https://github.com/IGdev-Studios/igdev_dep_board" />
+               </HorizontalStackLayout>
         </StackLayout>
     </Shell.TitleView>
     <ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
-
+    <ShellContent
+        Title="DepartsTag"
+        ContentTemplate="{DataTemplate local:Tag}"
+        Route="Tag"/>
 
 </Shell>

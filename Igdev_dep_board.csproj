@@ -49,7 +49,32 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <AndroidResource Remove="Resources\Raw\NewFolder\**" />
+	  <Compile Remove="Resources\Raw\NewFolder\**" />
+	  <EmbeddedResource Remove="Resources\Raw\NewFolder\**" />
+	  <MauiAsset Remove="Resources\Raw\NewFolder\**" />
+	  <MauiCss Remove="Resources\Raw\NewFolder\**" />
+	  <MauiXaml Remove="Resources\Raw\NewFolder\**" />
+	  <None Remove="Resources\Raw\NewFolder\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Tag.xaml.cs">
+	    <DependentUpon>Tag.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiXaml Update="Tag.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Resources\Components\HyperLink.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

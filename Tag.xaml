@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Igdev_dep_board.Tag"
+             Title="Réseau Tag"
+             BackgroundColor="White">
+    <ScrollView>
+        <VerticalStackLayout>
+            <BoxView HorizontalOptions="Fill" HeightRequest="2" />
+            <HorizontalStackLayout Margin="10">
+                <Border StrokeShape="RoundRectangle 6" WidthRequest="50" HeightRequest="50" BackgroundColor="{StaticResource Gray100}" Stroke="{StaticResource Gray100}">
+                    <!--<Border.Shadow>
+                        <Shadow Brush="Black" Offset="4,4" Opacity="0.4"/>
+                    </Border.Shadow>-->
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label Text="15" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,3,0,0" FontSize="20" FontFamily="FiraSans-Bold"/>
+                        <Label Text="min" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,-3,0,0" TextColor="{StaticResource Gray400}" FontSize="10"/>
+                    </VerticalStackLayout>
+                </Border>
+                <Image Source="l25.png" HeightRequest="45" Margin="5, 0"/>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="10, 0, 0, 0">
+                    <Label Text="Grenoble, Colonel Dumont - Vif, Le Gua" FontFamily="FiraSans-Bold" FontSize="15"/>
+                    <Label Text="Vers Grenoble, ColonelDumont" TextColor="{StaticResource Gray400}" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:Igdev_dep_board.Resources.Components"
              x:Class="Igdev_dep_board.MainPage"
              BackgroundColor="White">
     <ScrollView>
-        <StackLayout Orientation="Vertical">
+        <StackLayout Orientation="Vertical" x:Name="mainLayoutVert">
             <StackLayout Orientation="Vertical" BackgroundColor="{StaticResource MainColor}" Padding="50">
                 <Label Text="Tabeleau des départs TAG, Pays Voironnais mobilité et TouGo" FontAttributes="Bold" FontSize="64" TextColor="White" HorizontalOptions="Center" HorizontalTextAlignment="Center"/>
                 <FlexLayout Direction="Row" Wrap="Wrap" HorizontalOptions="Center">
-                    <Button Text="RÉSEAU TAG"/>
+                    <Button Text="RÉSEAU TAG" Clicked="GotoTag"/>
                     <Button Text="RÉSEAU PAYS VOIRONNAIS"/>
                     <Button Text="RÉSEAU DU GRÉSIVAUDAN"/>
                 </FlexLayout>
             </StackLayout>
             <FlexLayout Direction="Row" Wrap="Wrap" Margin="20" JustifyContent="SpaceBetween">
-                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1">
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1" x:Name="Border1">
                     <Border.Shadow>
                         <Shadow Brush="Black"
                                 Offset="4,4"
@@ -28,21 +29,40 @@
                         <Label Text="- Toutes les lignes Transisère, aux arrêts TAG, Pays Voironnais Mobilité et TouGo sont disponible." Margin="20, 0, 0, 0" Padding="2"/>
                     </StackLayout>
                 </Border>
-                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1">
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 10" StrokeThickness="0.1" x:Name="Border2">
                     <Border.Shadow>
                         <Shadow Brush="Black"
                                 Offset="4,4"
                                 Opacity="0.4"/>
                     </Border.Shadow>
-                    <StackLayout Orientation="Vertical" Padding="20" >
+                    <StackLayout Orientation="Vertical" Padding="20">
                         <Label Text="Crédits" FontAttributes="Bold" HorizontalOptions="Start" Padding="2"/>
-                        <Label Text="- Données issues de l'open data Metromobilités." Margin="20, 0, 0, 0" Padding="2"/>
-                        <Label Text="- Icones des lignes TAG par Citadis et Kelyaenn." Margin="20, 0, 0, 0" Padding="2"/>
-                        <Label Text="- Icones des lignes du Pays Voironnais et tougo par Borisi1234." Margin="20, 0, 0, 0" Padding="2"/>
-                        <Label Text="- Script originel par Kelyaenn" Margin="20, 0, 0, 0" Padding="2"/>
+                        <HorizontalStackLayout Margin="20, 0, 0, 0" Padding="2">
+                            <Label Text="- Données issues de l'"/>
+                            <components:HyperLink Text="open data Metromobilités." Url="https://www.mobilites-m.fr/pages/opendata/OpenDataApi.html"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="20, 0, 0, 0" Padding="2">
+                            <Label Text="- Icones des lignes TAG par "/>
+                            <components:HyperLink Text="Citadis" Url="https://github.com/Citadis"/>
+                            <Label Text=" et "/>
+                            <components:HyperLink Text="Kelyaenn." Url="https://github.com/kelyaenn"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="20, 0, 0, 0" Padding="2">
+                            <Label Text="- Icones des lignes du Pays Voironnais et tougo par "/>
+                            <components:HyperLink Text="Borisi1234." Url="https://github.com/Borisi1234"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="20, 0, 0, 0" Padding="2">
+                            <Label Text="- Script originel par"/>
+                            <components:HyperLink Text="Kelyaenn." Url="https://github.com/kelyaenn"/>
+                        </HorizontalStackLayout>
                     </StackLayout>
                 </Border>
             </FlexLayout>
+            <Image Source="igdev.png" MaximumWidthRequest="500"/>
+            <HorizontalStackLayout Padding="10" BackgroundColor="{StaticResource Gray100}" Margin="0, 10, 0, 0">
+                <Label Text="Application réalisée avec ❤️ par: "/>
+                <components:HyperLink Text="Boing le Boeing" Url="https://github.com/boingtheboeing"/>
+            </HorizontalStackLayout>
         </StackLayout>
     </ScrollView>
 </ContentPage>

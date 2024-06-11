@@ -40,7 +40,7 @@
 						break;
 				}
 				let LinesAndStop = JSON.parse(localStorage.getItem(itemToLoad));
-				HTMLContent = "Prochains départs " + LinesAndStop.arret;
+				HTMLContent = LinesAndStop.arret;
 				document.title = LinesAndStop.arret;
 				document.getElementById('main').innerHTML = HTMLContent;
 				document.getElementById('arretForm').value = LinesAndStop.arret;
@@ -53,7 +53,7 @@
 				document.getElementById('rightIconText').innerHTML = networkData.rightIconText;
 				document.getElementById('networkImage').src = networkData.image;
 
-			}).catch((error) => {
+				//}).catch((error) => {
 				console.log(error);
 				//handle error
 				alert("impossible de charger les arrêts");
@@ -178,114 +178,149 @@
 			document.getElementById('time').innerHTML = time;
 
 		}, 1000);
+
+		// Sélectionne le bouton hamburger et le menu
+		const menuToggle = document.getElementById('menuToggle');
+		const menu = document.getElementById('menu');
+
+		// Ajoute un événement de clic au bouton hamburger
+		menuToggle.addEventListener('click', () => {
+			// Ajoute ou enlève la classe 'show' au menu pour le faire apparaître/disparaître
+			menu.classList.toggle('show');
 	</script>
 	<title>TAG Departure board</title>
 </head>
 
 <body onload="document.getElementById('time').innerHTML = getTime(); checkSaved(); loading(); refresh();">
-	<div id="loading">
-		<div class="loader">
-			<div></div>
-			<div></div>
-			<div></div>
-			<div></div>
+
+	<header>
+		<div class="menu-hamburger" id="menuToggle">
+			<div class="bar"></div>
+			<div class="bar"></div>
+			<div class="bar"></div>
 		</div>
-		<div class="loadingText">Chargement</div>
-	</div>
-	<div id="cadre">
-		<!-- Cadre Noir-->
-		<div class="main-grid">
-			<div class="main" id="main">Prochains départs</div>
+		<nav id="menu">
+			<ul>
+				<li>
+					<form>
+						<div class="bottom_form">
+							<div class="bottom_field">
+								<label for="arretForm"> <br>Arrêt : (utilisez l'autocomplétion) </label>
+								<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" class="arretForm"
+									list="arretForm-list">
+								<!-- <input list="list-cities" type="text" name="arretForm" class="arretForm" placeholder="Arrêt"> -->
+							</div>
+							<div class="bottom_field">
+								<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les
+									lignes
+									; si il
+									y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
+								<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne"
+									class="arretForm" list="lignesForm-list">
+							</div>
+							<div class="bottom_field">
+								<label for="numberRowsForm"><br>Nombre de lignes à afficher</label>
+								<input id="numberRowsForm" type="number" name="numberRowsForm"
+									placeholder="Nombre de lignes à afficher" class="arretForm"><br>
+							</div>
+							<div id="stopsData">
+
+							</div>
+
+						</div>
+
+						<button type="button" class="button"
+							onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
+
+
+
+					</form>
+				</li>
+				<li>
+					<div class="button_bottom">
+						<a href="index.html"><button class="button">
+								Accéder a l'affichage Béta</button></a>
+					</div>
+				</li>
+				<li>
+					<div class="button_bottom">
+						<a href="index.html"><button class="button">
+								<- Retour à l'index</button></a>
+					</div>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<main>
+
+		<div class="Part1">
+			<div class="main" id="main"></div>
 			<div class="heure"><span id="time">88:88</span></div>
 		</div>
-		<div class="ligneblanche"></div>
-		<div class="txtfix colfix">
-			<!-- Ligne texte-->
-			<div class="">Ligne</div>
-			<div class="">Destination</div>
-			<div class="">Temps d'attente</div>
-		</div>
-		<div id="surcadre">
-			<!--Cadre blanc -->
-			<div id="passages">
-				<div class="colfix dest-ligne">
-					<div class="ligne-img">
-						-
-					</div>
-					<div class="dest-txt">
-						Chargement
-					</div>
-					<div class="time-txt">
-						-
-					</div>
-				</div>
-				<div class="lignegrise"></div>
+
+		<div id="cadre">
+			<!-- Cadre Noir-->
+			<div class="main-grid">
+
+
 			</div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img"><img id="networkImage"
-						src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png"
-						alt="TAG"></div>
-				<div class="dest-txt">
-					<div id="slogan"></div>
+			<div class="ligneblanche"></div>
+			<div class="txtfix colfix">
+				<!-- Ligne texte-->
+				<div class="">Ligne</div>
+				<div class="">Destination</div>
+				<div class="">Heure de passage</div>
+			</div>
+			<div id="surcadre">
+				<!--Cadre blanc -->
+				<div id="passages">
+					<div class="colfix dest-ligne">
+						<div class="ligne-img">
+							-
+						</div>
+						<div class="dest-txt">
+							Chargement
+						</div>
+						<div class="time-txt">
+							-
+						</div>
+					</div>
+					<div class="lignegrise"></div>
 				</div>
-				<div class="time-txt"><img id="rightIcon" src="" alt="Citadis" /><span>
-						<div id="rightIconText"></div>
+				<div class="colfix dest-ligne">
+					<div class="ligne-img"><img id="networkImage"
+							src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png"
+							alt="TAG"></div>
+					<div class="dest-txt">
+						<div id="slogan"></div>
+					</div>
+				</div>
+			</div>
+			<div class="colfix">
+				<div></div>
+				<div class="infoth txtfix">* : information théorique</div>
+				<div class="txtfix "><span>
+
 					</span></div>
 			</div>
 		</div>
-		<div class="colfix">
-			<div></div>
-			<div class="infoth txtfix">* : information théorique</div>
-			<div class="txtfix "><span>
+		<br>
+		<details>
+			<summary>Afficher plus</summary>
 
-				</span></div>
-		</div>
-	</div>
-	<br>
-	<details>
-		<summary>Afficher plus</summary>
-		<form>
-			<div class="bottom_form">
-				<div class="bottom_field">
-					<label for="arretForm"> <br>Arrêt : (utilisez l'autocomplétion) </label>
-					<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" class="arretForm"
-						list="arretForm-list">
-					<!-- <input list="list-cities" type="text" name="arretForm" class="arretForm" placeholder="Arrêt"> -->
-				</div>
-				<div class="bottom_field">
-					<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il
-						y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
-					<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" class="arretForm"
-						list="lignesForm-list">
-				</div>
-				<div class="bottom_field">
-					<label for="numberRowsForm"><br>Nombre de lignes à afficher</label>
-					<input id="numberRowsForm" type="number" name="numberRowsForm"
-						placeholder="Nombre de lignes à afficher" class="arretForm"><br>
-				</div>
-				<div id="stopsData">
+		</details>
+	</main>
 
-				</div>
-
-			</div>
-
-			<button type="button" class="button"
-				onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
+	<footer>
 
 
 
-		</form>
-	</details>
+	</footer>
 
-	<div class="button_bottom">
-		<a href="./departs.html"><button class="button">
-				<- Revenir à l'affichage standard</button></a>
-	</div>
 
-	<div class="button_bottom">
-		<a href="index.html"><button class="button">
-				<- Retour à l'index</button></a>
-	</div>
+
+
 </body>
 
 </html>

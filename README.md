@@ -3,6 +3,9 @@ Mini-site simple créé pour afficher l'arrivée du prochain bus sur un tableau 
 Actuellement, tous les arrêts TAG (Grenoble), Pays voironnais mobilité (Pays voironnais) et TouGo (Grésivaudan) sont disponibles et fonctionnels.
 
 # FR. PATCH NOTES :
+V1.2
+  - Fusion des différentes pages HTML en une seul
+
 V1
   - Possibilité de choisir le nombre de lignes à afficher
   - La ligne clignote lorsque le bus arrive dans <1min

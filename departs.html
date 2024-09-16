@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="fr">
+<!-- Version 1-->
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href=favicon.ico>
+	<link rel="stylesheet" type="text/css" href="./css/style.css">
+	<script src="js/script.js"></script>
+	<script src="js/stopsAndLines.js"></script>
+	<script src="js/networks.js"></script>
+	<script>
+		async function loading() {
+			let networkSelected = await getNetworkName();
+			console.log(networkSelected);
+			let stopsData = await loadStopAndLines(networkSelected).then((data) => {
+				if (data == "error") {
+					//handle error
+				}
+				else {
+					document.getElementById('stopsData').innerHTML = data;
+				}
+
+				let numberRows = localStorage.getItem('numberRows');
+				let itemToLoad = "";
+				switch (networkSelected) {
+					case 'tag':
+						itemToLoad = "LinesAndStopTAG";
+						break;
+					case 'tpv':
+						itemToLoad = "LinesAndStopTPV";
+						break;
+					case 'tougo':
+						itemToLoad = "LinesAndStopGSV";
+						break;
+					default:
+						itemToLoad = "LinesAndStopTAG";
+						break;
+				}
+				let LinesAndStop = JSON.parse(localStorage.getItem(itemToLoad));
+				HTMLContent = "Prochains départs " + LinesAndStop.arret;
+				document.title = LinesAndStop.arret;
+				document.getElementById('main').innerHTML = HTMLContent;
+				document.getElementById('arretForm').value = LinesAndStop.arret;
+				document.getElementById('lignesForm').value = LinesAndStop.lines;
+				document.getElementById('numberRowsForm').value = numberRows;
+				document.getElementById('loading').classList.add('loaded');
+				const networkData = getNetwork(networkSelected);
+				document.getElementById('slogan').innerHTML = networkData.slogan;
+				document.getElementById('rightIcon').src = networkData.rightIcon;
+				document.getElementById('rightIconText').innerHTML = networkData.rightIconText;
+				document.getElementById('networkImage').src = networkData.image;
+
+			}).catch((error) => {
+				console.log(error);
+				//handle error
+				alert("impossible de charger les arrêts");
+			});
+
+		}
+		async function refresh() {
+			let schedules = await getSchedules();
+			if (schedules == "Aucun passage de prévu") {
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				document.getElementById('passages').innerHTML = HTMLContent;
+			} else if (schedules == "Erreur chargement") {
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Erreur connexion au serveur</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				document.getElementById('passages').innerHTML = HTMLContent;
+
+			} else {
+				let finalSchedules = sort(schedules);
+
+				HTMLContent = "";
+				let numberRows = localStorage.getItem('numberRows');
+				if (finalSchedules.length >= numberRows) {
+					for (let i = 0; i <= numberRows - 1; i++) {
+						if (finalSchedules[i].time >= 0) {
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if (linesImages.includes(finalSchedules[i].line)) {
+								HTMLContent += '<img src="img/';
+								HTMLContent += finalSchedules[i].line;
+								HTMLContent += '_600px.png" alt="' + finalSchedules[i].line + '"/>';
+
+							} else {
+								HTMLContent += finalSchedules[i].line;
+							}
+
+							HTMLContent += '</div><div class="dest-txt">';
+							HTMLContent += finalSchedules[i].lastStop + '</div><div class="time-txt">';
+							if (finalSchedules[i].time == 0) {
+								HTMLContent += '<div class="blink_me">';
+								HTMLContent += "<1";
+								HTMLContent += "min";
+
+								if (finalSchedules[i].realtime != true) {
+									HTMLContent += "*";
+								}
+								HTMLContent += '</div>';
+							} else if (finalSchedules[i].time >= 60) {
+								HTMLContent += minutesToHours(finalSchedules[i].time);
+								if (finalSchedules[i].realtime != true) {
+									HTMLContent += "*";
+								}
+
+							} else {
+								HTMLContent += finalSchedules[i].time;
+								HTMLContent += "min";
+								if (finalSchedules[i].realtime != true) {
+									HTMLContent += "*";
+								}
+							}
+
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+					}
+				} else {
+					finalSchedules.forEach(element => {
+						if (element.time >= 0) {
+							if (element.time == 0) {
+								HTMLContent += '<div class="blink_me">';
+							}
+							HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">'
+							if (linesImages.includes(element.line)) {
+								HTMLContent += '<img src="img/';
+								HTMLContent += element.line;
+								HTMLContent += '_600px.png" alt="' + element.line + '"/>';
+
+							} else {
+								HTMLContent += element.line;
+							}
+
+							HTMLContent += '</div><div class="dest-txt">';
+							HTMLContent += element.lastStop + '</div><div class="time-txt">';
+							if (element.time == 0) {
+								HTMLContent += '<div class="blink_me">';
+								HTMLContent += "<1";
+								HTMLContent += "min";
+
+								if (element.realtime != true) {
+									HTMLContent += "*";
+								}
+								HTMLContent += '</div>';
+							} else if (element.time >= 60) {
+								HTMLContent += minutesToHours(element.time);
+								if (element.realtime != true) {
+									HTMLContent += "*";
+								}
+							} else {
+								HTMLContent += element.time;
+								HTMLContent += "min";
+								if (element.realtime != true) {
+									HTMLContent += "*";
+								}
+							}
+							HTMLContent += "</div>";
+							HTMLContent += "</div>";
+							HTMLContent += '<div class="lignegrise"></div>';
+						}
+
+					});
+				}
+
+
+
+				document.getElementById('passages').innerHTML = HTMLContent;
+
+			}
+		};
+		setInterval(function () {
+			refresh();
+		}, 15000);
+		setInterval(function () {
+			let time = getTime();
+			document.getElementById('time').innerHTML = time;
+
+		}, 1000);
+	</script>
+	<title>TAG Departure board</title>
+</head>
+
+<body onload="document.getElementById('time').innerHTML = getTime(); checkSaved(); loading(); refresh();">
+	<div id="loading">
+		<div class="loader">
+			<div></div>
+			<div></div>
+			<div></div>
+			<div></div>
+		</div>
+		<div class="loadingText">Chargement</div>
+	</div>
+	<div id="cadre">
+		<!-- Cadre Noir-->
+		<div class="main-grid">
+			<div class="main" id="main">Prochains départs</div>
+			<div class="heure"><span id="time">88:88</span></div>
+		</div>
+		<div class="ligneblanche"></div>
+		<div class="txtfix colfix">
+			<!-- Ligne texte-->
+			<div class="">Ligne</div>
+			<div class="">Destination</div>
+			<div class="">Temps d'attente</div>
+		</div>
+		<div id="surcadre">
+			<!--Cadre blanc -->
+			<div id="passages">
+				<div class="colfix dest-ligne">
+					<div class="ligne-img">
+						-
+					</div>
+					<div class="dest-txt">
+						Chargement
+					</div>
+					<div class="time-txt">
+						-
+					</div>
+				</div>
+				<div class="lignegrise"></div>
+			</div>
+			<div class="colfix dest-ligne">
+				<div class="ligne-img"><img id="networkImage"
+						src="https://cdn.tc-infos.fr/network-logos/1272.svg"
+						alt="M réso"></div>
+				<div class="dest-txt">
+					<div id="slogan"></div>
+				</div>
+				<div class="time-txt"><img id="rightIcon" src="" alt="IGdev" /><span>	
+					</span></div>
+			</div>
+		</div>
+		<div class="colfix">
+			<div></div>
+			<div class="infoth txtfix">* : information théorique</div>
+			<div class="txtfix "><span>
+
+				</span></div>
+		</div>
+	</div>
+	<br>
+	<details>
+		<summary>Afficher plus</summary>
+		<form>
+			<div class="bottom_form">
+				<div class="bottom_field">
+					<label for="arretForm"> <br>Arrêt : (utilisez l'autocomplétion) </label>
+					<input id="arretForm" type="text" name="arretForm" placeholder="Arrêt" class="arretForm"
+						list="arretForm-list">
+					<!-- <input list="list-cities" type="text" name="arretForm" class="arretForm" placeholder="Arrêt"> -->
+				</div>
+				<div class="bottom_field">
+					<label for="lignesForm"> Numéro(s) de ligne : (laissez vide pour afficher toutes les lignes ; si il
+						y a plusieurs lignes, séparez les par une virgule. Ex: "19,21") </label>
+					<input id="lignesForm" type="text" name="lignesForm" placeholder="Ligne" class="arretForm"
+						list="lignesForm-list">
+				</div>
+				<div class="bottom_field">
+					<label for="numberRowsForm"><br>Nombre de lignes à afficher</label>
+					<input id="numberRowsForm" type="number" name="numberRowsForm"
+						placeholder="Nombre de lignes à afficher" class="arretForm"><br>
+				</div>
+				<div id="stopsData">
+
+				</div>
+
+			</div>
+
+			<button type="button" class="button"
+				onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
+
+
+
+		</form>
+	</details>
+
+	<div class="button_bottom">
+		<a href="./DépartV2.html"><button class="button">
+				Accéder a l'affichage Béta</button></a>
+	</div>
+
+	<div class="button_bottom">
+		<a href="./index.html"><button class="button">
+				<- Retour à l'index</button></a>
+	</div>
+</body>
+
+</html>

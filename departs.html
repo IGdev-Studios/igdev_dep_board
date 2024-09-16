@@ -26,7 +26,7 @@
 				let numberRows = localStorage.getItem('numberRows');
 				let itemToLoad = "";
 				switch (networkSelected) {
-					case 'tag':
+					case 'M-reso':
 						itemToLoad = "LinesAndStopTAG";
 						break;
 					case 'tpv':
@@ -50,7 +50,7 @@
 				const networkData = getNetwork(networkSelected);
 				document.getElementById('slogan').innerHTML = networkData.slogan;
 				document.getElementById('rightIcon').src = networkData.rightIcon;
-				document.getElementById('rightIconText').innerHTML = networkData.rightIconText;
+
 				document.getElementById('networkImage').src = networkData.image;
 
 			}).catch((error) => {
@@ -223,13 +223,12 @@
 			</div>
 			<div class="colfix dest-ligne">
 				<div class="ligne-img"><img id="networkImage"
-						src="https://upload.wikimedia.org/wikipedia/fr/thumb/a/a0/TAG_%28Logotype_2014%29.svg/512px-TAG_%28Logotype_2014%29.svg.png"
-						alt="TAG"></div>
+						src="https://cdn.tc-infos.fr/network-logos/1272.svg"
+						alt="Mréso"></div>
 				<div class="dest-txt">
 					<div id="slogan"></div>
 				</div>
-				<div class="time-txt"><img id="rightIcon" src="" alt="Citadis" /><span>
-						<div id="rightIconText"></div>
+				<div class="time-txt"><img id="rightIcon" src="" alt="IGdev" /><span>	
 					</span></div>
 			</div>
 		</div>
@@ -278,7 +277,7 @@
 	</details>
 
 	<div class="button_bottom">
-		<a href="./DepartsV2.html"><button class="button">
+		<a href="./DépartV2.html"><button class="button">
 				Accéder a l'affichage Béta</button></a>
 	</div>
 

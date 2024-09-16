@@ -9,15 +9,18 @@ async function getSchedules() {
     console.log(networkName);
     let itemToLoad = "";
     switch (networkName) {
-        case 'tag':
+        case 'Mréso':
             itemToLoad = "LinesAndStopTAG";
             break;
+
         case 'tpv':
             itemToLoad = "LinesAndStopTPV";
             break;
+            
         case 'tougo':
             itemToLoad = "LinesAndStopGSV";
             break;
+
         default:
             itemToLoad = "LinesAndStopTAG";
             break;
@@ -132,7 +135,7 @@ function getTime() {
 async function checkSaved() {
     let networkName = await getNetworkName();
     switch (networkName) {
-        case 'tag':
+        case 'Mréso':
             if (localStorage.getItem('LinesAndStopTAG') == null) {
                 let LinesAndStop = {
                     "arret": "Montfleury",
@@ -142,27 +145,19 @@ async function checkSaved() {
                 localStorage.setItem('LinesAndStopTAG', JSON.stringify(LinesAndStop));
             }
             break;
+
         case 'tpv':
             if (localStorage.getItem('LinesAndStopTPV') == null) {
                 let LinesAndStop = {
                     "arret": "Voiron, LEPRINCE RINGUET",
-                    "zone": "TPV:ST00408",
+                    "zone": "TPV:1000740",
                     "lines": ["1"]
                 }
                 localStorage.setItem('LinesAndStopTPV', JSON.stringify(LinesAndStop));
             }
 
             break;
-        case 'tougo':
-            if (localStorage.getItem('LinesAndStopGSV') == null) {
-                let LinesAndStop = {
-                    "arret": "Meylan, NORBERT SEGARD",
-                    "zone": "GSV:GEN20088",
-                    "lines": ["G2"]
-                }
-                localStorage.setItem('LinesAndStopGSV', JSON.stringify(LinesAndStop));
-            }
-            break;
+
         default:
             if (localStorage.getItem('LinesAndStopTAG') == null) {
                 let LinesAndStop = {
@@ -193,7 +188,7 @@ async function editLinesAndStop(stop, lines, numberRows) {
     var linesSplit = lines.split(",");
     let networkName = await getNetworkName();
     let code = "";
-    switch (networkName) {
+    /*switch (networkName) {
         case 'tag':
             code = "SEM:"
             break;
@@ -207,9 +202,10 @@ async function editLinesAndStop(stop, lines, numberRows) {
             code = "SEM:"
             break;
     }
+            */
     let itemToSave = "";
     switch (networkName) {
-        case 'tag':
+        case 'Mréso':
             itemToSave = "LinesAndStopTAG";
             break;
         case 'tpv':
@@ -224,7 +220,7 @@ async function editLinesAndStop(stop, lines, numberRows) {
     }
     let LinesAndStop = {
         "arret": stop,
-        "zone": code + dictStops[found][0],
+        "zone": /*code + */dictStops[found][0],
         "lines": lines
     }
     localStorage.setItem(itemToSave, JSON.stringify(LinesAndStop));
@@ -244,7 +240,7 @@ function minutesToHours(minutes) {
 async function loadStopAndLines(networkName) {
     let fileName = "";
     switch (networkName) {
-        case 'tag':
+        case 'Mréso':
             fileName = "js/stopsTag.txt";
             break;
         case 'tpv':

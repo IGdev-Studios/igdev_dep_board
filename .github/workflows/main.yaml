@@ -1,0 +1,54 @@
+run-name: ${{ github.event.commits[0].message }}
+
+on:
+    push:
+        branches: 
+            - website
+            - main
+            - master
+    pull_request:
+    workflow_dispatch:
+
+jobs:
+    build-product:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - uses: actions/setup-node@v4
+            
+            - name: Install Angular ng
+              run: npm install -g @angular/cli
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Build
+              run: npm run build
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                name: ${{ github.event.repository.name }}
+                path: dist/ig-dev-departure-board/browser
+    
+    deploy-product:
+        needs: build-product
+        runs-on: ubuntu-latest
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master' || github.ref == 'refs/heads/website'
+        steps:
+            - name: Download artifact
+              uses: actions/download-artifact@v4
+              with:
+                name: ${{ github.event.repository.name }}
+                path: dist/ig-dev-departure-board/browser
+
+            - name: Deploy
+              uses: peaceiris/actions-gh-pages@v4
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                publish_dir: ./dist/ig-dev-departure-board/browser
+                commit_message: ${{ github.event.commits[0].message }}
+                user_name: ${{ github.actor }}
+                user_email: ${{ github.actor }}@users.noreply.github.com

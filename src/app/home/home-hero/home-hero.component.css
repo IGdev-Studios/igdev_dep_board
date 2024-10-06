@@ -1,0 +1,78 @@
+.mainTitleWrapper {
+    background-color: var(--main-colour);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: 5em;
+    color: white;
+    text-align: center;
+    font-weight: 700;
+}
+
+.titleButton {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    margin: 10px 7px;
+    padding: 10px 10px;
+    font-weight: 700;
+    font-size: 1.5em;
+    color: white;
+    border: 2px white solid;
+    border-radius: 4px;
+    text-transform: uppercase;
+    z-index: 1;
+    cursor: pointer;
+    transition: 0.08s ease-in;
+    -o-transition: 0.08s ease-in;
+    -ms-transition: 0.08s ease-in;
+    -moz-transition: 0.08s ease-in;
+    -webkit-transition: 0.08s ease-in;
+}
+
+.titleButton {
+    text-decoration: none;
+}
+
+.titleButton:hover {
+    color: black;
+}
+
+
+.titleButton:before {
+    content: "";
+    position: absolute;
+    background: white;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 100%;
+    z-index: -1;
+    -webkit-transition: top 0.09s ease-in;
+}
+
+.titleButton:hover:before {
+    top: 0;
+}
+
+.mainButtons {
+    display: flex;
+}
+
+img {
+    height: 100px;
+}
+
+@media screen and (max-width: 768px) {
+    .mainButtons {
+        flex-direction: column;
+    }
+
+}

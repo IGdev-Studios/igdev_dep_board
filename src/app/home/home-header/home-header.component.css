@@ -1,0 +1,64 @@
+.menuTop {
+    display: flex;
+    padding: 10px 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.imgTitle {
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.rightMenu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+.rightMenu>a {
+    text-decoration: none;
+    color: black;
+}
+
+.underlineLink {
+    display: inline-block;
+    position: relative;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.underlineLink::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--main-colour);
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+}
+
+.underlineLink:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+
+@media screen and (max-width: 768px) {
+    .menuTop {
+        flex-direction: column;
+    }
+
+    .rightMenu {
+        margin-top: 10px;
+    }
+
+    .imgTitle {
+        font-size: 3em;
+    }
+}

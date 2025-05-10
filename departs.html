@@ -63,10 +63,10 @@
 		async function refresh() {
 			let schedules = await getSchedules();
 			if (schedules == "Aucun passage de prévu") {
-				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div></div>';
 				document.getElementById('passages').innerHTML = HTMLContent;
 			} else if (schedules == "Erreur chargement") {
-				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Erreur connexion au serveur</div><div class="time-txt">-</div></div><div class="lignegrise"></div>';
+				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Erreur connexion au serveur</div><div class="time-txt">-</div></div></div>';
 				document.getElementById('passages').innerHTML = HTMLContent;
 
 			} else {
@@ -114,7 +114,7 @@
 
 							HTMLContent += "</div>";
 							HTMLContent += "</div>";
-							HTMLContent += '<div class="lignegrise"></div>';
+
 						}
 					}
 				} else {
@@ -196,101 +196,8 @@
 		<div id="cadre-haut">
 			<div class="main-grid">
 				<div class="main" id="main">Prochains départs</div>
-				<div class="heure"><span id="time">88:88</span></div>
-			</div>
-		</div>
-
-		<br>
-		<!--Cadre de gauche-->
-		<div id="cadre">
-			<!-- Cadre Noir-->
-			<div class="txtfix colfix">
-				<!-- Ligne texte-->
-				<div class="">Ligne</div>
-				<div class="">Destination</div>
-				<div class="">Temps d'attente</div>
-			</div>
-			<div id="surcadre">
-				<!--Cadre blanc -->
-				<div id="passages">
-					<div class="colfix dest-ligne">
-						<div class="ligne-img">
-							-
-						</div>
-						<div class="dest-txt">
-							Chargement
-						</div>
-						<div class="time-txt">
-							-
-						</div>
-					</div>
-					<div class="lignegrise"></div>
-				</div>
-
-			</div>
-			<div class="colfix">
-				<div></div>
-				<div class="infoth txtfix">* : information théorique</div>
-				<div class="txtfix "><span>
-
-					</span></div>
-			</div>
-		</div>
-		<!--Cadre de droite-->
-		<div id="cadre">
-			<div class="txtfix colfix">
-				<!-- Ligne texte-->
-				<div class="">Ligne</div>
-				<div class=""> </div>
-				<div class="">Temps d'attente</div>
-			</div>
-			<div id="surcadre">
-				<!--Cadre blanc -->
-				<div id="passages">
-					<div class="colfix dest-ligne">
-						<div class="ligne-img">
-							-
-						</div>
-						<div class="dest-txt">
-							Chargement
-						</div>
-						<div class="time-txt">
-							-
-						</div>
-					</div>
-					<div class="lignegrise"></div>
-				</div>
-				<div class="colfix dest-ligne">
-					<div class="ligne-img"><img id="networkImage" src="./img/HBD-transpent.png"
-							alt="Mréso"></div>
-					<div class="dest-txt">
-						<div id="slogan"></div>
-					</div>
-					<div class="time-txt">
-						<img id="rightIcon" src="./img/IGdev.png" alt="IGdev" /><span>
-						</span></div>
-				</div>
-			</div>
-			<div class="colfix">
-				<div></div>
-				<div class="infoth txtfix">* : information théorique</div>
-				<div class="txtfix "><span>
-
-					</span></div>
-			</div>
-		</div>
-
-		<div id="cadre-bas">
-			Information ligne 25 :
-			<br>
-			<marquee behavior="scroll" direction="left">Du lundi 12 mai 2025 au samedi 24 mai 2025, l'arrêt "VIF - La Valonne" en direction de "LE GUA - Les Saillants" est reporté à l'arrêt provisoire à proximité en raison de travaux sur le quai.</marquee>
-			
-		</div>
-	</div>
-
-	<br>
-	<details>
-		<summary>Afficher plus</summary>
+				<details>
+		<summary>				<div class="heure"><span id="time">88:88</span></div></summary>
 		<form>
 			<div class="bottom_form">
 				<div class="bottom_field">
@@ -319,20 +226,119 @@
 			<button type="button" class="button"
 				onclick="editLinesAndStop(document.getElementById('arretForm').value,document.getElementById('lignesForm').value,document.getElementById('numberRowsForm').value);">Valider</button>
 
+			<div class="button_bottom">
+				<a href="./index.html">
+					<button class="button">
+						<- Retour à l'index </button></a>
+			</div>
+
 
 
 		</form>
 	</details>
 
-	<div class="button_bottom">
-		<a href="./DépartV2.html"><button class="button">
-				Accéder a l'affichage Béta</button></a>
+			</div>
+		</div>
+
+		<br>
+		<!--Cadre de gauche-->
+		<div id="cadre1">
+			<!-- Cadre Noir-->
+			<div class="txtfix colfix">
+				<!-- Ligne texte-->
+				<div class="">Ligne</div>
+				<div class="">Destination</div>
+				<div class="">Temps d'attente</div>
+			</div>
+			<div id="surcadre">
+				<!--Cadre blanc -->
+				<div id="passages">
+					<div class="colfix dest-ligne">
+						<div class="ligne-img">
+							-
+						</div>
+						<div class="dest-txt">
+							Chargement
+						</div>
+						<div class="time-txt">
+							-
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="colfix">
+				<div></div>
+				<div class="infoth txtfix">* : information théorique</div>
+				<div class="txtfix "><span>
+
+					</span></div>
+			</div>
+		</div>
+		<!--Cadre de droite-->
+		<div id="cadre2">
+			<div class="txtfix colfix">
+				<!-- Ligne texte-->
+				<div class="">Ligne</div>
+				<div class=""> </div>
+				<div class="">Temps d'attente</div>
+			</div>
+			<div id="surcadre">
+				<!--Cadre blanc -->
+				<div id="passages">
+					<div class="colfix dest-ligne">
+						<div class="ligne-img">
+							-
+						</div>
+						<div class="dest-txt">
+							Aucun départ prévu
+						</div>
+						<div class="time-txt">
+							-
+						</div>
+					</div>
+
+				</div>
+				<div class="colfix dest-ligne">
+					<div class="ligne-img"><img id="networkImage" src="./img/HBD-transpent.png" alt="Mréso"></div>
+					<div class="dest-txt">
+						<div id="slogan"></div>
+					</div>
+					<div class="time-txt">
+						<img id="rightIcon" src="./img/IGdev.png" alt="IGdev" /><span>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="colfix">
+				<div></div>
+				<div class="infoth txtfix">* : information théorique</div>
+				<div class="txtfix "><span>
+
+					</span></div>
+			</div>
+		</div>
+
+		<div id="cadre-bas">
+			<div id="Anatole">
+				<img src="./img/Logo-IT.svg" alt="">
+			</div>
+			<div>
+				Information ligne 25 :
+				<br>
+				<marquee behavior="scroll" direction="left">Du lundi 12 mai 2025 au samedi 24 mai 2025, l'arrêt "VIF -
+					La Valonne" en direction de "LE GUA - Les Saillants" est reporté à l'arrêt provisoire à proximité en
+					raison de travaux sur le quai.</marquee>
+			</div>
+
+
+		</div>
 	</div>
 
-	<div class="button_bottom">
-		<a href="./index.html"><button class="button">
-				<- Retour à l'index</button></a>
-	</div>
+	<br>
+	
+
+
 </body>
 
 </html>

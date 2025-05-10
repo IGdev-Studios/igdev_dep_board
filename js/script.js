@@ -138,9 +138,9 @@ async function checkSaved() {
         case 'Mréso':
             if (localStorage.getItem('LinesAndStopTAG') == null) {
                 let LinesAndStop = {
-                    "arret": "Montfleury",
-                    "zone": "SEM:GENMONTFLEU",
-                    "lines": ["16"]
+                    "arret": "Le Pont-de-Claix, L'Etoile",
+                    "zone": "SEM:GENLETOILE",
+                    "lines": ["C2,25,C14,T75,T90,T92,T95"]
                 }
                 localStorage.setItem('LinesAndStopTAG', JSON.stringify(LinesAndStop));
             }
@@ -161,9 +161,9 @@ async function checkSaved() {
         default:
             if (localStorage.getItem('LinesAndStopTAG') == null) {
                 let LinesAndStop = {
-                    "arret": "Montfleury",
-                    "zone": "SEM:GENMONTFLEU",
-                    "lines": ["16"]
+                    "arret": "Le Pont-de-Claix, L'Etoile",
+                    "zone": "SEM:GENLETOILE",
+                    "lines": ["C2,25,C14,T75,T90,T92,T95"]
                 }
                 localStorage.setItem('LinesAndStopTAG', JSON.stringify(LinesAndStop));
             }

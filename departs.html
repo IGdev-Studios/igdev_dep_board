@@ -6,7 +6,7 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href=favicon.ico>
+	<link rel="shortcut icon" href="./img/favicon.ico">
 	<link rel="stylesheet" type="text/css" href="./css/style.css">
 	<script src="js/script.js"></script>
 	<script src="js/stopsAndLines.js"></script>
@@ -179,7 +179,7 @@
 
 		}, 1000);
 	</script>
-	<title>TAG Departure board</title>
+	<title>HB Departure board</title>
 </head>
 
 <body onload="document.getElementById('time').innerHTML = getTime(); checkSaved(); loading(); refresh();">
@@ -192,54 +192,102 @@
 		</div>
 		<div class="loadingText">Chargement</div>
 	</div>
-	<div id="cadre">
-		<!-- Cadre Noir-->
-		<div class="main-grid">
-			<div class="main" id="main">Prochains départs</div>
-			<div class="heure"><span id="time">88:88</span></div>
-		</div>
-		<div class="ligneblanche"></div>
-		<div class="txtfix colfix">
-			<!-- Ligne texte-->
-			<div class="">Ligne</div>
-			<div class="">Destination</div>
-			<div class="">Temps d'attente</div>
-		</div>
-		<div id="surcadre">
-			<!--Cadre blanc -->
-			<div id="passages">
-				<div class="colfix dest-ligne">
-					<div class="ligne-img">
-						-
-					</div>
-					<div class="dest-txt">
-						Chargement
-					</div>
-					<div class="time-txt">
-						-
-					</div>
-				</div>
-				<div class="lignegrise"></div>
+	<div id="cadre-principal">
+		<div id="cadre-haut">
+			<div class="main-grid">
+				<div class="main" id="main">Prochains départs</div>
+				<div class="heure"><span id="time">88:88</span></div>
 			</div>
-			<div class="colfix dest-ligne">
-				<div class="ligne-img"><img id="networkImage"
-						src="https://cdn.tc-infos.fr/network-logos/1272.svg"
-						alt="Mréso"></div>
-				<div class="dest-txt">
-					<div id="slogan"></div>
+		</div>
+
+		<br>
+		<!--Cadre de gauche-->
+		<div id="cadre">
+			<!-- Cadre Noir-->
+			<div class="txtfix colfix">
+				<!-- Ligne texte-->
+				<div class="">Ligne</div>
+				<div class="">Destination</div>
+				<div class="">Temps d'attente</div>
+			</div>
+			<div id="surcadre">
+				<!--Cadre blanc -->
+				<div id="passages">
+					<div class="colfix dest-ligne">
+						<div class="ligne-img">
+							-
+						</div>
+						<div class="dest-txt">
+							Chargement
+						</div>
+						<div class="time-txt">
+							-
+						</div>
+					</div>
+					<div class="lignegrise"></div>
 				</div>
-				<div class="time-txt"><img id="rightIcon" src="" alt="IGdev" /><span>	
+
+			</div>
+			<div class="colfix">
+				<div></div>
+				<div class="infoth txtfix">* : information théorique</div>
+				<div class="txtfix "><span>
+
 					</span></div>
 			</div>
 		</div>
-		<div class="colfix">
-			<div></div>
-			<div class="infoth txtfix">* : information théorique</div>
-			<div class="txtfix "><span>
+		<!--Cadre de droite-->
+		<div id="cadre">
+			<div class="txtfix colfix">
+				<!-- Ligne texte-->
+				<div class="">Ligne</div>
+				<div class=""> </div>
+				<div class="">Temps d'attente</div>
+			</div>
+			<div id="surcadre">
+				<!--Cadre blanc -->
+				<div id="passages">
+					<div class="colfix dest-ligne">
+						<div class="ligne-img">
+							-
+						</div>
+						<div class="dest-txt">
+							Chargement
+						</div>
+						<div class="time-txt">
+							-
+						</div>
+					</div>
+					<div class="lignegrise"></div>
+				</div>
+				<div class="colfix dest-ligne">
+					<div class="ligne-img"><img id="networkImage" src="./img/HBD.png"
+							alt="Mréso"></div>
+					<div class="dest-txt">
+						<div id="slogan"></div>
+					</div>
+					<div class="time-txt">
+						<img id="rightIcon" src="./img/IGdev.png" alt="IGdev" /><span>
+						</span></div>
+				</div>
+			</div>
+			<div class="colfix">
+				<div></div>
+				<div class="infoth txtfix">* : information théorique</div>
+				<div class="txtfix "><span>
 
-				</span></div>
+					</span></div>
+			</div>
+		</div>
+
+		<div id="cadre-bas">
+			Information ligne 25 :
+			<br>
+			<marquee behavior="scroll" direction="left">Du lundi 12 mai 2025 au samedi 24 mai 2025, l'arrêt "VIF - La Valonne" en direction de "LE GUA - Les Saillants" est reporté à l'arrêt provisoire à proximité en raison de travaux sur le quai.</marquee>
+			
 		</div>
 	</div>
+
 	<br>
 	<details>
 		<summary>Afficher plus</summary>

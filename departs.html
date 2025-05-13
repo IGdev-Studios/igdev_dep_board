@@ -11,6 +11,7 @@
 	<script src="js/script.js"></script>
 	<script src="js/stopsAndLines.js"></script>
 	<script src="js/networks.js"></script>
+	<script src="js/histobus.js"></script>
 	<script>
 		async function loading() {
 			let networkSelected = await getNetworkName();
@@ -61,6 +62,9 @@
 
 		}
 		async function refresh() {
+			// refresh hbd 
+			refreshHBDDepartures();
+
 			let schedules = await getSchedules();
 			if (schedules == "Aucun passage de prévu") {
 				HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div></div>';
@@ -285,13 +289,13 @@
 			</div>
 			<div id="surcadre">
 				<!--Cadre blanc -->
-				<div id="passages">
+				<div id="passages_hbd">
 					<div class="colfix dest-ligne">
 						<div class="ligne-img">
 							-
 						</div>
 						<div class="dest-txt">
-							Aucun départ prévu
+							Chargement
 						</div>
 						<div class="time-txt">
 							-

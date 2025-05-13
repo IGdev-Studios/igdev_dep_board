@@ -10,12 +10,15 @@ var departures = {
         "08:30",
         "09:00",
         "09:30",
-        "22:00",
+        "21:30",
+        "22:00*",
         "22:30",
+
     ],
     "wednesday": [
         "12:00",
         "12:30",
+        "21:30",
     ],
     "thursday": [
     ],
@@ -30,11 +33,51 @@ var departures = {
     ]
 }
 
+var vehiclesList = {
+
+        "monday": [
+        "GX 107",
+        "GX 107",
+        "GX 107",
+        "GX 107",
+    ],
+    "tuesday": [
+        "GX 107",
+        "GX 107",
+        "GX 107",
+        "GX 107",
+        "GX 107",
+        "GX 107",
+        "GX 107",
+
+    ],
+    "wednesday": [
+        "12:00",
+        "12:30",
+        "21:30",
+    ],
+    "thursday": [
+    ],
+    "friday": [
+
+    ],
+    "saturday": [
+
+    ],
+    "sunday": [
+
+    ]
+}
+
+
+
 const getClosestDepartures = (numberOfDepartures) => {
     const today = new Date();
     const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' }).toLowerCase();
     const currentTime = today.toTimeString().slice(0, 5);
     const departuresToday = departures[dayOfWeek];
+
+
 
     if (!departuresToday) {
         return [];
@@ -50,6 +93,8 @@ const getClosestDepartures = (numberOfDepartures) => {
     return closestDepartures;
 }
 
+    const vehicles = vehiclesList[dayOfWeek];
+
 const refreshHBDDepartures = () => {
     // variable qui va recevoir le contenu à afficher
     let HTMLContent = "";
@@ -63,7 +108,7 @@ const refreshHBDDepartures = () => {
     } else {
         // on parcourt les départs
         closestDepartures.forEach((departure) => {
-            HTMLContent += `<div class="colfix dest-ligne"><div class="dest-txt">${departure}</div></div>`;
+            HTMLContent += `<div class="colfix dest-ligne"><div class="ligne-img"></div><div class="dest-txt">${vehiclesList}</div><div class="time-txt">${departure}</div></div>`;
         });
     }
 

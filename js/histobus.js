@@ -1,90 +1,41 @@
-var departures = {
-    "monday": [
-        "08:00",
-        "08:30",
-        "09:00",
-        "09:30",
+const departures = {
+    "monday":   [
+        {"time":"08:00","vehicule":"GX 107"},
+        {"time":"08:30","vehicule":"GX 107"},
+        {"time":"09:00","vehicule":"GX 107"},
+        {"time":"09:30","vehicule":"GX 107"}
     ],
-    "tuesday": [
-        "08:00",
-        "08:30",
-        "09:00",
-        "09:30",
-        "21:30",
-        "22:00*",
-        "22:30",
-
+    "tuesday":  [
+        {"time":"08:00","vehicule":"GX 107"},
+        {"time":"08:30","vehicule":"GX 107"},
+        {"time":"09:00","vehicule":"GX 107"},
+        {"time":"09:30","vehicule":"GX 107"},
+        {"time":"21:30","vehicule":"GX 107"},
+        {"time":"22:00*","vehicule":"GX 107"},
+        {"time":"23:09","vehicule":"GX 107"}
     ],
-    "wednesday": [
-        "12:00",
-        "12:30",
-        "21:30",
+    "wednesday":[
+        {"time":"12:00","vehicule":"GX 107"},
+        {"time":"12:30","vehicule":"GX 107"},
+        {"time":"21:30","vehicule":"GX 107"}
     ],
-    "thursday": [
-    ],
-    "friday": [
-
-    ],
-    "saturday": [
-
-    ],
-    "sunday": [
-
-    ]
+    "thursday": [],
+    "friday":   [],
+    "saturday": [],
+    "sunday":   []
 }
 
-var vehiclesList = {
-
-        "monday": [
-        "GX 107",
-        "GX 107",
-        "GX 107",
-        "GX 107",
-    ],
-    "tuesday": [
-        "GX 107",
-        "GX 107",
-        "GX 107",
-        "GX 107",
-        "GX 107",
-        "GX 107",
-        "GX 107",
-
-    ],
-    "wednesday": [
-        "12:00",
-        "12:30",
-        "21:30",
-    ],
-    "thursday": [
-    ],
-    "friday": [
-
-    ],
-    "saturday": [
-
-    ],
-    "sunday": [
-
-    ]
-}
-
-
-
-const getClosestDepartures = (numberOfDepartures) => {
+function getClosestDepartures(numberOfDepartures) {
     const today = new Date();
     const dayOfWeek = today.toLocaleString('en-US', { weekday: 'long' }).toLowerCase();
     const currentTime = today.toTimeString().slice(0, 5);
     const departuresToday = departures[dayOfWeek];
 
-
-
     if (!departuresToday) {
         return [];
     }
 
-    const closestDepartures = departuresToday.filter(departure => departure > currentTime).slice(0, numberOfDepartures);
-
+    const closestDepartures = departuresToday.filter(departure => departure.time > currentTime).slice(0, numberOfDepartures);
 
     if (closestDepartures.length === 0) {
         return null;
@@ -93,9 +44,7 @@ const getClosestDepartures = (numberOfDepartures) => {
     return closestDepartures;
 }
 
-    const vehicles = vehiclesList[dayOfWeek];
-
-const refreshHBDDepartures = () => {
+function refreshHBDDepartures() {
     // variable qui va recevoir le contenu à afficher
     let HTMLContent = "";
 
@@ -104,11 +53,11 @@ const refreshHBDDepartures = () => {
 
     // on vérifie s'il y en reste encore
     if (closestDepartures === null) {
-        HTMLContent = '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun passage de prévu</div><div class="time-txt">-</div></div></div>';
+        HTMLContent += '<div class="colfix dest-ligne"><div class="ligne-img">-</div><div class="dest-txt">Aucun départ de prévu</div><div class="time-txt">-</div></div></div>';
     } else {
         // on parcourt les départs
         closestDepartures.forEach((departure) => {
-            HTMLContent += `<div class="colfix dest-ligne"><div class="ligne-img"></div><div class="dest-txt">${vehiclesList}</div><div class="time-txt">${departure}</div></div>`;
+            HTMLContent += `<div class="colfix dest-ligne"><div class="ligne-img"></div><div class="dest-txt">${departure.vehicule}</div><div class="time-txt">${departure.time}</div></div>`;
         });
     }
 

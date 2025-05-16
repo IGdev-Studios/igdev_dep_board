@@ -1,28 +1,37 @@
 const departures = {
-    "monday":   [
-        {"time":"08:00","vehicule":"GX 107"},
-        {"time":"08:30","vehicule":"GX 107"},
-        {"time":"09:00","vehicule":"GX 107"},
-        {"time":"09:30","vehicule":"GX 107"}
+    "monday": [
+        { "time": "08:00", "vehicule": "GX 107" },
+        { "time": "08:30", "vehicule": "GX 107" },
+        { "time": "09:00", "vehicule": "GX 107" },
+        { "time": "09:30", "vehicule": "GX 107" }
     ],
-    "tuesday":  [
-        {"time":"08:00","vehicule":"GX 107"},
-        {"time":"08:30","vehicule":"GX 107"},
-        {"time":"09:00","vehicule":"GX 107"},
-        {"time":"09:30","vehicule":"GX 107"},
-        {"time":"21:30","vehicule":"GX 107"},
-        {"time":"22:00*","vehicule":"GX 107"},
-        {"time":"23:09","vehicule":"GX 107"}
+    "tuesday": [
+        { "time": "08:00", "vehicule": "GX 107" },
+        { "time": "08:30", "vehicule": "GX 107" },
+        { "time": "09:00", "vehicule": "GX 107" },
+        { "time": "09:30", "vehicule": "GX 107" },
+        { "time": "21:30", "vehicule": "GX 107" },
+        { "time": "22:00*", "vehicule": "GX 107" },
+        { "time": "23:09", "vehicule": "GX 107" }
     ],
-    "wednesday":[
-        {"time":"12:00","vehicule":"GX 107"},
-        {"time":"12:30","vehicule":"GX 107"},
-        {"time":"21:30","vehicule":"GX 107"}
+    "wednesday": [
+        { "time": "12:00", "vehicule": "GX 107" },
+        { "time": "12:30", "vehicule": "GX 107" },
+        { "time": "12:30", "vehicule": "GX 107" },
+        { "time": "18:30*", "vehicule": "<s>Heuliez GX 107</s> <br> COMPLET" },
+        { "time": "19:30*", "vehicule": "Renault PR.180-R" },
+        { "time": "21:00*", "vehicule": "Renault PR.180-R" },
+        { "time": "21:01*", "vehicule": "Renault PR.180-R" },
+        { "time": "21:02*", "vehicule": "Renault PR.180-R" },
+        { "time": "21:03*", "vehicule": "Renault PR.180-R" }
+
     ],
     "thursday": [],
-    "friday":   [],
-    "saturday": [],
-    "sunday":   []
+    "friday": [],
+    "saturday": [
+          
+    ],
+    "sunday": []
 }
 
 function getClosestDepartures(numberOfDepartures) {
@@ -49,7 +58,7 @@ function refreshHBDDepartures() {
     let HTMLContent = "";
 
     // on récupère les prochaines départs du jour
-    const closestDepartures = getClosestDepartures(3);
+    const closestDepartures = getClosestDepartures(6);
 
     // on vérifie s'il y en reste encore
     if (closestDepartures === null) {

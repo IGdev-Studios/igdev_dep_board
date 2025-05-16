@@ -124,8 +124,8 @@ img {
 	background-color: #cccbcf;
 }
 
-#anatole-gauche {
-	display: flex;
+#Anatole {
+	margin-right: 30px;
 }
 
 .colfix {
@@ -389,4 +389,11 @@ summary {
 	.imgTitle {
 		font-size: 3em;
 	}
+}
+
+.dest-txt1 {
+	font-family: "Fira Sans", sans-serif;
+	font-size: 60px;
+	text-align: center;
+	color: white;
 }
